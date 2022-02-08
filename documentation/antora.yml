@@ -1,5 +1,5 @@
-name: managed-kafka-workshop
-title: Red Hat OpenShift Streams for Apache Kafka Workshop
+name: managed-apim-workshop
+title: Red Hat OpenShift API Management
 version: main
 nav:
   - modules/ROOT/nav.adoc

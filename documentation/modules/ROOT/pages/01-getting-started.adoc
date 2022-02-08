@@ -1,129 +1,200 @@
-= Getting Started with OpenShift Streams for Apache Kafka
+:standard-fail-text: Verify that you followed all the steps. If you continue to have issues, contact a workshop assistant.
+:namespace: {user-username}
+:idp: GitHub
+:ocm-url: https://cloud.redhat.com
+:osd-name: OpenShift Dedicated
+:osd-acronym: OSD
+:rhoam-name: Red Hat OpenShift API Management
+:rhoam-acronym: RHOAM
+:3scale-name: 3scale API Management
+:sso-name: Single Sign-On
 
-As a developer of applications and services, you can use OpenShift Streams for Apache Kafka to create and set up Kafka instances and connect your applications and services to these instances. Streams for Apache Kafka is a managed cloud service that enables you to add Kafka data-streaming functionality in your applications without having to install, configure, run, and maintain your own Kafka clusters.
 
-[#redhataccount]
-== Create a Red Hat account
+= Red Hat OpenShift API Management Introduction
 
-You need a Red Hat account to provision a managed Kafka instance. If you don’t have a Red Hat account, this is how you can create one: 
+This lab provides an introduction to {rhoam-name}, also known as {rhoam-acronym}. If you're already familiar with Red Hat {osd-name}, Red Hat {3scale-name} and Red Hat {sso-name} you'll immediately feel at home using {rhoam-acronym}.
 
-. Go to https://console.redhat.com[console.redhat.com]. 
+{rhoam-acronym} is {3scale-name} delivered as an addon for
+{osd-name} ({osd-acronym}). Both {osd-acronym}, and the {rhoam-acronym} addon
+running on top of it, are managed by Red Hat SRE and have a 99.95% SLA. The
+following image provides a high-level overview of the {rhoam-acronym} architecture:
 
-. Click the *Register for a Red Hat account* link to create a Red Hat account.
+image::images/basic-architecture.png[architecture, role="integr8ly-img-responsive"]
+
+However, since {rhoam-acronym} is a hosted an managed service there's a little more to it than that picture shows.
+{rhoam-acronym} clusters are provisioned and managed using Red Hat OpenShift Cluster Manager on link:{ocm-url}[cloud.redhat.com, window="_blank"].
+Operators are installed on the {osd-acronym} to manage the {rhoam-acronym} product lifecycle, and keep SRE teams informed of the cluster and service health. A more detailed architectural representation of this is pictured below.
+
+image::images/detailed-architecture.png[detailed architecture, role="integr8ly-img-responsive"]
+
+It is assumed you have access to a {rhoam-acronym} environment from this point forward.
+You can get access by:
+
+. Requesting it from a lab instructor if you're following this content as part of an instructor led lab.
+. Provisioning an environment of your own at link:{ocm-url}[cloud.redhat.com, window="_blank"] using the following instructions:
+.. link:{https://access.redhat.com/documentation/en-us/red_hat_openshift_api_management/1/}[Official Documentation]
+.. link:{https://www.youtube.com/watch?v=sd2TlBm5KHs}[Video Instructions]
+
+Verify you have a development environment with the following configured before continuing:
+
+* OpenShift (`oc`) CLI v4.6.x
+* Git CLI
+* Local Java environment with Maven installed
+
+:sectnums:
+== Installing the {rhoam-acronym} Add-on
+
+. Login to link:{ocm-url}[cloud.redhat.com, window="_blank"].
+. Navigate to the link:{ocm-url/openshift/}[clusters list, window="_blank"].
+. Select the {osd-name} cluster you plan to install {rhoam-acronym} onto.
+. Navigate to the *Add-ons* tab.
 +
-image::register-redhat-account.png[width=60%]
+image::images/lab1-addon-tile.png[RHOAM Addon tile in Add-ons UI]
+. Click the *Install* button on the {rhoam-name} tile.
+. A dialog asking for *CIDR range* and *Notification email* are displayed.
 +
-Be sure to select a *Personal account* type.
-
-[#kafka]
-== Provision a Kafka instance in OpenShift Streams for Apache Kafka
-
-. Go to https://console.redhat.com[console.redhat.com] and log in with your Red Hat account.
-
-. On the https://console.redhat.com[console.redhat.com] landing page, select *Application Services* from the menu on the left.
-
-. On the Application Services landing page, select *Streams for Apache Kafka → Kafka Instances*.
+image::images/lab1-addon-dialog.png[RHOAM Addon Dialog UI]
+. Click the *Use default* link for the CIDR range.
 +
-image::rhosak-kafka-instances.png[]
-
-. On the Kafka Instances overview page, click the *Create Kafka* instance button. Enter a unique name and select the relevant _Cloud region_ for your Kafka instance and click *Create instance*. This starts the provisioning process for your Kafka instance. 
-
-. The new Kafka instance is listed in the instances table. After a couple of minutes, your instance should be marked as ready. 
+[NOTE]
+====
+We're using the default CIDR range since we chose the basic networking configuration when creating the cluster used in this lab. It may be necessary to specify a different CIDR range if you had chosen advanced networking.
+====
+. Enter your email address in the *Notification email* field.
 +
-image::rhosak-kafka-instance-ready.png[]
+[NOTE]
+====
+This email address will receive notifications when the API Management service utilisation approaches limits defined in the SKU.
+The 3scale and Cluster monitoring has more detail about notifications and alerts.
+====
+. Choose the *Evaluation* option from the Quota dropdown if it's displayed.
++
+[NOTE]
+====
+The OpenShift API Management resource requests/requirements are scaled based on the *Quota*.
+====
+. Check the *Addon Resource Requirements* box.
+. Click the *Install* button.
 
-. When the instance _Status_ is _Ready_, you can start using the Kafka instance. You can use the options icon (three vertical dots) to view, connect to, or delete the instance as needed.
+The installation takes approximately 45 minutes on most clusters.
+
+[time=5]
+[id='accessing-the-cluster']
+==  Accessing your Environment
 
 [NOTE]
 ====
-Although you can see Kafka instances created by other users in your organization, you can't manage those instances. Only the user who creates an instance can edit or delete the instance, setup permissions and create or delete topics.
+You can skip this section if you did not provision your own environment.
 ====
 
-[#serviceaccount]
-== Create a Service Account to connect to a Kafka instance
+If you've provisioned your own environment you can access the OpenShift console using the following steps:
 
-To connect your applications or services to a Streams for Apache Kafka instance, you need to create a service account.
+. Login to link:{ocm-url}[cloud.redhat.com, window="_blank"].
+. Navigate to the link:{ocm-url/openshift/}[clusters list, window="_blank"].
+. Select the cluster that has the {rhoam-name} addon installed.
+. Click the *Open Console* button from the Overview screen.
 
-. On the *Kafka Instances* overview page, select the *Options* icon (the three dots) for the Kafka instance you just created. Select *View connection information*.
+A screenshot of the Overview screen is provided for reference.
 
-. Copy the *Bootstrap server* endpoint to a secure location. You will need this when connecting to your Kafka instance.
+image::images/lab1-console-url.png[Cluster Overview, role="integr8ly-img-responsive"]
 
-. Click *Create service account* to set up the service account. Enter a unique service account name and an optional description, and click *Create*.
+Once you've been provided with a URL to your environment, you will be able to login using a configured IdP (identity provider).
+Any available IdPs are listed on the OpenShift login screen as shown in the following screenshot.
 
-. Copy the generated *Client ID* and *Client Secret* to a secure location. These are the credentials that you’ll use to connect to this Kafka instance.
-+
-[IMPORTANT]
+image::images/lab1-login.png[OpenShift Login Screen, role="integr8ly-img-responsive"]
+
+Choose the appropriate IdP and login. You should be redirected to the {osd-name} console.
+
+image::images/lab1-osd-console.png[OpenShift Console, role="integr8ly-img-responsive"]
+
+Documentation for {osd-name} IdP configuration is available at link:https://docs.openshift.com/dedicated/4/authentication/dedicated-understanding-authentication.html[this link].
+
+== Accessing Red Hat {3scale-name} and Red Hat {sso-name}
+
+If the {rhoam-name} Add-on has completed installation you can login into your {osd-acronym} cluster, and you can access the managed {3scale-name} and {sso-name} instances.
+
+You can confirm the Add-on installation is complete by checking the Add-ons tab in OpenShift Cluster Management as shown.
+
+image::images/lab1-addon-status.png[Add-on Status in OCM]
+
+[NOTE]
 ====
-The generated credentials are displayed only one time, so ensure that you’ve successfully and securely saved the copied credentials before closing the credentials window. 
+At the time of writing there is a known issue that may cause the Add-on to report a status of "Installed" prior to completion. Be patient with this and check the *Installed Operators* page to confirm that the various operators have finished installing.
 ====
 
-. After saving the generated credentials, select the confirmation check box and close the Credentials window.
+The procedure to access the consoles is the same for both {3scale-name} and {sso-name}.
+
+. Click the *Application Launcher* icon in the {osd-name} console. This the square icon in the top-right.
 +
-image::rhosak-service-account.png[]
+image:images/lab1-app-launcher.png[OSD Application Launcher]
+. Select *API Management* to access {3scale-name}, or *API Management SSO* to access {sso-name}.
+. A new browser tab will open and prompt you to login. Login using your IdP.
+. You will be redirected to the applicable product console after successfully authenticating with your IdP.
 
-You’ll use the service account information that you saved to configure your application to connect to your Kafka instances when you’re ready. For example, if you plan to use link:https://github.com/edenhill/kcat[kcat] to interact with your Kafka instance, you’ll use this information to set your bootstrap server and client environment variables.
+This is a screenshot the {3scale-name} console:
 
-[#serviceaccountpermissions]
-== Set Permissions for a Service Account
+image::images/lab1-3scale-console.png[3scale Console, role="integr8ly-img-responsive"]
 
-After you create a service account to connect to a Kafka instance, you must also set the appropriate level of access for that new account in the Access Control List (ACL) of the Kafka instance. Streams for Apache Kafka uses ACLs provided by Kafka that enable you to manage how other user accounts and service accounts are permitted to interact with the Kafka resources that you create.
+And this is a screenshot of the {sso-name} console:
 
-. On the *Kafka Instances* page, click the name of the Kafka instance you previously created.
+image::images/lab1-sso-console.png[SSO Console, role="integr8ly-img-responsive"]
 
-. Click the *Access* tab to view the current ACL for this instance.
-+
-image::rhosak-default-access.png[]
+== Create and Deploy a Project on {osd-name}
 
-. Click *Manage access*, use the *Account* drop-down menu to select the service account that you previously created, and click *Next*.
+As part of this lab you'll deploy a Quarkus application for use in future labs.
+To deploy the Quarkus application you must first create a project.
+Here's how to do that:
 
-. Under *Assign Permissions*, use the drop-down menus to set the permissions shown in the following table for this service account. Click *Add* to add each new resource permission.
-+
-These permissions enable applications associated with the service account to create and delete topics in the instance, to produce and consume messages in any topic in the instance, and to use any consumer group and any producer.
-+
-.Example ACL permissions for a new service account
-[cols="25%,25%,25%,25%"]
-|===
-h|Resource type
-h|Resource identifier and value
-h|Access type
-h|Operation
+. Navigate to the {osd-name} Console.
+. Click your name in the top-right, then click *Copy Login Command*.
+. Login using your IdP, and click *Display Token*.
+. Copy the `oc login` command and paste it into a terminal in your local development environment.
 
-|`Topic`
-|`Is` = `*`
-|`Allow`
-|`All`
+You should be successfully logged in and able to use the OpenShift CLI now.
+Verify this by creating a project using the following commands:
 
-|`Consumer group`
-|`Is` = `*`
-|`Allow`
-|`Read`
+----
+# change this to be unique using your name
+export PROJECT_NAME=yourname-lab
 
-|`Transactional ID`
-|`Is` = `*`
-|`Allow`
-|`All`
-|===
-+
-image::rhosak-access-serviceaccount.png[]
+oc new-project $PROJECT_NAME
+----
 
-. After you add these permissions for the service account, click *Save* to finish.
+Here's an image showing these commands running in a terminal:
 
-[#topic]
-== Create a Kafka Topic in OpenShift Streams for Apache Kafka
+image::images/lab1-oc-project.png[Using oc CLI to create a project, role="integr8ly-img-responsive"]
 
-After you create a Kafka instance, you can create Kafka topics to start producing and consuming messages in your services.
+== Test the Quarkus Application and Deploy to {osd-name}
 
-. In the *Kafka Instances* page of the web console, click the name of the Kafka instance that you want to add a topic to.
+Get started by cloning the link:{https://github.com/evanshortiss/rhoam-quarkus-openapi}[Quarkus application Git repository] to your development environment.
 
-. Select the *Topics* tab, click *Create topic*, and follow the guided steps to define the topic details. Click *Next* to complete each step and click *Finish* to complete the setup.
-+
-image:rhosak-create-topic.png[]
-+
-* *Topic name*: Enter a unique topic name, such as `my-first-kafka-topic`.
-* *Partitions*: Set the number of partitions for this topic. This example sets the partition to 1 for a single partition. Partitions are distinct lists of messages within a topic and enable parts of a topic to be distributed over multiple brokers in the cluster. A topic can contain one or more partitions, enabling producer and consumer loads to be scaled.
-+
-NOTE: You can increase the number of partitions later, but you cannot decrease them.
-* *Message retention*: Set the message retention time and size to the relevant value and increment. The default retention time is set to `A week` and the retention size to `Unlimited`. Message retention time is the amount of time that messages are retained in a topic before they are deleted or compacted, depending on the cleanup policy. Retention size is the maximum total size of all log segments in a partition before they are deleted or compacted.
-* *Replicas*: For this release of Streams for Apache Kafka, the replicas are preconfigured. The number of partition replicas for the topic is set to `3` and the minimum number of follower replicas that must be in sync with a partition leader is set to `2`. Replicas are copies of partitions in a topic. Partition replicas are distributed over multiple brokers in the cluster to ensure topic availability if a broker fails. When a follower replica is in sync with a partition leader, the follower replica can become the new partition leader if needed.
+----
+git clone https://github.com/evanshortiss/rhoam-quarkus-openapi
+----
 
-After you complete the topic setup, the new Kafka topic is listed in the topics table. You can now start producing and consuming messages to and from this topic using services that you connect to this instance.
+Run and test the application locally:
+
+. Start the development server using `./mvnw quarkus:dev`
+. Visit link:http://localhost:8080/fruits[localhost:8080/fruits].
+. Verify that a list of fruits is returned in JSON format.
+. Visit link:http://localhost:8080/openapi?format=json[localhost:8080/openapi?format=json] to verify that an OpenAPI Spec is returned.
+
+
+If all is working as expected, deploy the application using the following commands:
+
+----
+oc project $PROJECT_NAME
+
+# Note $PROJECT_NAME must be set for this next command to work!
+./mvnw clean package -Dquarkus.kubernetes.deploy=true -Dquarkus.openshift.expose=true
+----
+
+The build process can take up to 2 minutes.
+You can view the Build logs by visiting the *Builds* section of your project as shown.
+
+image::images/lab1-build.png[Build Configs, role="integr8ly-img-responsive"]
+
+Once the build is complete issue the `oc get route -n $PROJECT_NAME` command to find the URL for your Quarkus application.
+Verify that the `/fruits` and `/openapi?format=json` endpoints are working as expected since these are required for the next lab.
+
+You're now ready for Lab 2!

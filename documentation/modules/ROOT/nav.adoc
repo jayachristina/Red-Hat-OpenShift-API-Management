@@ -1,24 +1,63 @@
-* xref:01-getting-started.adoc[1. Getting Started with OpenShift Streams for Apache Kafka]
-** xref:01-getting-started.adoc#redhataccount[Create a Red Hat Account]
-** xref:01-getting-started.adoc#kafka[Provision a Kafka instance]
-** xref:01-getting-started.adoc#serviceaccount[Create a Service Account]
-** xref:01-getting-started.adoc#serviceaccountpermissions[Set Permissions for a Service Account]
-** xref:01-getting-started.adoc#topic[Create a Kafka Topic]
+:standard-fail-text: Verify that you followed all the steps. If you continue to have issues, contact a workshop assistant.
+:namespace: {user-username}
+:idp: GitHub
+:ocm-url: https://cloud.redhat.com
+:osd-name: OpenShift Dedicated
+:osd-acronym: OSD
+:rhoam-name: Red Hat OpenShift API Management
+:rhoam-acronym: RHOAM
+:3scale-name: 3scale API Management
+:sso-name: Single Sign-On
+:3scale-toolbox: 3Scale toolbox
+:sso-name-short: Red Hat SSO
 
-* xref:02-using-kcat.adoc[2. Using kcat with Kafka instances in OpenShift Streams for Apache Kafka]
-** xref:02-using-kcat.adoc#devsandboxaccess[Get access to the Developer Sandbox]
-** xref:02-using-kcat.adoc#toolsimage[Install the tools image on Developer Sandbox]
-** xref:02-using-kcat.adoc#kcatconnect[Configuring kcat to connect to a Kafka instance]
-** xref:02-using-kcat.adoc#kcatproduce[Producing messages in kcat]
-** xref:02-using-kcat.adoc#kcatconsume[Consuming messages in kcat]
 
-* xref:03-connect-streams-apache-kafka.adoc[3. Connecting OpenShift Streams for Apache Kafka]
-** xref:03-connect-streams-apache-kafka.adoc#toolsimage[Install the tools image on Developer Sandbox]
-** xref:03-connect-streams-apache-kafka.adoc#connectopenshiftstreams[Connect the OpenShift Streams for Apache Kafka instance to your OpenShift project]
-** xref:03-connect-streams-apache-kafka.adoc#inspectkafkadetails[Inspect the Kafka connection details]
 
-* xref:04-bind-quarkus-application.adoc[4. Binding a Quarkus application to OpenShift Streams for Apache Kafka]
-** xref:04-bind-quarkus-application.adoc#deployquarkusapplication[Deploying a Quarkus application]
-** xref:04-bind-quarkus-application.adoc#createkafkatopic[Creating a Kafka topic for your Quarkus application]
-** xref:04-bind-quarkus-application.adoc#toolsimage[Install the tools image on Developer Sandbox]
-** xref:04-bind-quarkus-application.adoc#bindquarkusapp[Binding your Quarkus application to Streams for Apache Kafka]
+* xref:01-getting-started.adoc[1. {rhoam-name} Introduction]
+** xref:01-getting-started.adoc#installrhoam[Installing RHOAM Add-on]
+** xref:01-getting-started.adoc#accessenv[Accessing your Environment]
+** xref:01-getting-started.adoc#access3scale[Accessing Red Hat {3scale-name} and Red Hat {sso-name}]
+** xref:01-getting-started.adoc#createdeployproject[Create and Deploy a Project on {osd-name}]
+** xref:01-getting-started.adoc#testquarkusapp[Test the Quarkus Application and Deploy to {osd-name}]
+
+* xref:02-service-discover.adoc[2. Using {rhoam-name} & Service Discovery]
+** xref:02-service-discover.adoc#preparequarkus[Prepare your Quarkus API for Service Discovery]
+** xref:02-service-discover.adoc#importquarkusapi[Import your Quarkus API using Service Discovery]
+** xref:02-service-discover.adoc#createapplicationplan[Create an Application Plan in {3scale-name}]
+** xref:02-service-discover.adoc#configdevaccount[Configure a Developer Account to use the Application]
+** xref:02-service-discover.adoc#testapi[Test the API]
+
+* xref:03-rate-limit-monitoring.adoc[3.{rhoam-name} Rate Limit Monitoring]
+** xref:03-rate-limit-monitoring.adoc#toolsimage[Accessing the Grafana Monitoring Instance]
+** xref:03-rate-limit-monitoring.adoc#connectopenshiftstreams[Viewing the Grafana Monitoring Dashboard]
+** xref:03-rate-limit-monitoring.adoc#inspectkafkadetails[Dashboard Overview]
+** xref:03-rate-limit-monitoring.adoc#inspectkafkadetails[Per Minute API Requests Graph]
+*** xref:03-rate-limit-monitoring.adoc#inspectkafkadetails[Filtered Per Minute API Requests Graph]
+
+
+* xref:04-secure-with-openid.adoc[4. Securing APIs with OpenID Connect and {sso-name} on {rhoam-name}]
+** xref:04-secure-with-openid.adoc#deployquarkusapplication[Create a Realm on {sso-name}]
+** xref:04-secure-with-openid.adoc#createkafkatopic[3scale and {sso-name} Integration]
+** xref:04-secure-with-openid.adoc#toolsimage[Create API in {3scale-name} and Configure to Use OpenID Connect]
+** xref:04-secure-with-openid.adoc#bindquarkusapp[Create Application]
+** xref:04-secure-with-openid.adoc#bindquarkusapp[Verify Application Client in {sso-name-short}]
+** xref:04-secure-with-openid.adoc#bindquarkusapp[Test the OIDC Secured API]
+*** xref:04-secure-with-openid.adoc#bindquarkusapp[Promote to Staging and Production APIcast]
+*** xref:04-secure-with-openid.adoc#bindquarkusapp[Test the API with Authorization Code flow.]
+
+
+
+* xref:05-3scale-toolbox.adoc[5. Use {3scale-toolbox} with {rhoam-name}]
+** xref:05-3scale-toolbox.adoc#deployquarkusapplication[Installation and Usage of {3scale-toolbox}]
+** xref:05-3scale-toolbox.adoc#deployquarkusapplication[Create API resources with {3scale-toolbox}]
+*** xref:05-3scale-toolbox.adoc#deployquarkusapplication[Manage remote access credentials]
+*** xref:05-3scale-toolbox.adoc#deployquarkusapplication[Import OpenAPI Spec]
+*** xref:05-3scale-toolbox.adoc#deployquarkusapplication[Create an Application Plan]
+*** xref:05-3scale-toolbox.adoc#deployquarkusapplication[Create an Application]
+
+
+* xref:06-cluster-monitoring.adoc[6. {rhoam-name} 3scale and {osd-name} Cluster Monitoring]
+** xref:06-cluster-monitoring.adoc#deployquarkusapplication[Accessing the Middleware Monitoring Stack]
+*** xref:06-cluster-monitoring.adoc#deployquarkusapplication[Accessing the Grafana Dashboards]
+*** xref:06-cluster-monitoring.adoc#deployquarkusapplication[Viewing Managed Service Resource Usage]
+*** xref:06-cluster-monitoring.adoc#deployquarkusapplication[Viewing Managed Service Resource Usage as a Fraction of Cluster Totals]

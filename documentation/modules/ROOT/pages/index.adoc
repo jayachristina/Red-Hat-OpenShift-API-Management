@@ -1,22 +1,39 @@
-= OpenShift Streams for Apache Kafka Workshop
+:standard-fail-text: Verify that you followed all the steps. If you continue to have issues, contact a workshop assistant.
+:namespace: {user-username}
+:idp: GitHub
+:ocm-url: https://cloud.redhat.com
+:osd-name: OpenShift Dedicated
+:osd-acronym: OSD
+:rhoam-name: Red Hat OpenShift API Management
+:rhoam-acronym: RHOAM
+:3scale-name: 3scale API Management
+:sso-name: Single Sign-On
+:3scale-toolbox: 3Scale toolbox
+:sso-name-short: Red Hat SSO
+
+
+
+= Red Hat OpenShift API Management Introduction
 :page-layout: home
 :!sectids:
 
 [.text-center.strong]
 == Introduction
 
-Welcome to the OpenShift Streams for Apache Kafka workshop.
+Welcome to the Red Hat OpenShift API Management workshop
 
-As a developer of applications and services, you can use OpenShift Streams for Apache Kafka to create and set up Kafka instances and connect your applications and services to these instances. Streams for Apache Kafka is a managed cloud service that enables you to add Kafka data-streaming functionality in your applications without having to install, configure, run, and maintain your own Kafka clusters.
+Red Hat® OpenShift® API Management (RHOAM) is a hosted and managed API management service delivered as an add-on product to Red Hat OpenShift Dedicated, a fully managed service of enterprise Kubernetes platform Red Hat OpenShift. 
+
+RHOAM  supports teams that want to take an API-first approach to building microservices-based applications so they can modernize existing systems, increase developer productivity, and deliver new applications faster. OpenShift API Management also includes Red Hat OpenShift Service Registry at no extra cost.
 
 In this workshop you will:
 
-* Create and inspect a Kafka instance using OpenShift Streams for Apache Kafka.
-* Create a service account to connect to the Kafka instance.
-* Create a topic in the kafka instance.
-* Use link:https://github.com/edenhill/kcat[kcat] to produce and consume messages for the Kafka instance.
-* Use the Red Hat OpenShift Application Services (RHOAS) Operator and CLI to connect the OpenShift Streams for Apache Kafka to an OpenShift cluster.
-* Bind a Quarkus application to OpenShift Streams for Apache Kafka using the Red Hat OpenShift Application Services CLI.
+* Create and setup Red Hat OpenShift API Management 
+* Use 3scale Service Discovery to import APIs, create applications plans and make calls to APIs using API Key security
+* Use and observe the API Management Dashboard (Grafana) for rate limiting status. 
+* Secure an API managed with 3scale API Management using OpenID Connect (OIDC), using the Red Hat Single Sign-On instance of RHOAM as identity provider.
+* Use 3scale toolbox to help administrators operate their APIs, and help automate the delivery of these APIs through Continuous Delivery pipelines.
+* Setup monitoring tools for RHOAM. 
 
 This workshop uses the link:https://developers.redhat.com/developer-sandbox[Developer Sandbox for Red Hat OpenShift], which provides you with a private OpenShift environment in a shared, multi-tenant OpenShift cluster that is pre-configured with a set of developer tools. This also means you won't have to install anything on your workstation in order to run this workshop.
 
@@ -24,30 +41,7 @@ This workshop uses the link:https://developers.redhat.com/developer-sandbox[Deve
 == Browse modules
 
 [.tile]
-.xref:01-getting-started.adoc[1. Getting Started]
-* xref:01-getting-started.adoc#redhataccount[Create a Red Hat Account]
-* xref:01-getting-started.adoc#kafka[Provision a Kafka instance]
-* xref:01-getting-started.adoc#serviceaccount[Create a Service Account]
-* xref:01-getting-started.adoc#serviceaccountpermissions[Set Permissions for a Service Account]
-* xref:01-getting-started.adoc#topic[Create a Kafka Topic]
 
-[.tile]
-.xref:02-using-kcat.adoc[2. Using kcat with Kafka instances in Streams for Apache Kafka]
-* xref:02-using-kcat.adoc#devsandboxaccess[Get access to the Developer Sandbox]
-* xref:02-using-kcat.adoc#toolsimage[Install the tools image on Developer Sandbox]
-* xref:02-using-kcat.adoc#kcatconnect[Configuring kcat to connect to a Kafka instance]
-* xref:02-using-kcat.adoc#kcatproduce[Producing messages in kcat]
-* xref:02-using-kcat.adoc#kcatconsume[Consuming messages in kcat]
+include::../nav.adoc[]
 
-[.tile]
-.xref:03-connect-streams-apache-kafka.adoc[3. Connecting OpenShift Streams for Apache Kafka]
-* xref:03-connect-streams-apache-kafka.adoc#toolsimage[Install the tools image on Developer Sandbox]
-* xref:03-connect-streams-apache-kafka.adoc#connectopenshiftstreams[Connect the OpenShift Streams for Apache Kafka instance to your OpenShift project]
-* xref:03-connect-streams-apache-kafka.adoc#inspectkafkadetails[Inspect the Kafka connection details]
 
-[.tile]
-.xref:04-bind-quarkus-application.adoc[4. Binding a Quarkus application to OpenShift Streams for Apache Kafka]
-* xref:04-bind-quarkus-application.adoc#deployquarkusapplication[Deploying a Quarkus application]
-* xref:04-bind-quarkus-application.adoc#createkafkatopic[Creating a Kafka topic for your Quarkus application]
-* xref:04-bind-quarkus-application.adoc#toolsimage[Install the tools image on Developer Sandbox]
-* xref:04-bind-quarkus-application.adoc#bindquarkusapp[Binding your Quarkus application to Streams for Apache Kafka]
