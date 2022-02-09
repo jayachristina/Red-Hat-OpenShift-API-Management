@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Use 3scale toolbox with Red Hat OpenShift API Management :: Red Hat OpenShift API Management</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/managed-apim-workshop/managed-apim-workshop/main/05-3scale-toolbox.html">
+    <link rel="prev" href="04-secure-with-openid.html">
+    <link rel="next" href="06-cluster-monitoring.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="../../_/img/NewRHDFullLogo_4-color_white-wordmark.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="https://redhat-scholars.github.io/managed-apim-workshop">Red Hat OpenShift API Management</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://developers.redhat.com/ebooks/" target="_blank">Books</a>
+        <a class="navbar-item" href="https://developers.redhat.com/cheatsheets/" target="_blank">Cheat Sheets</a>
+        <a class="navbar-item" href="https://developers.redhat.com/events/" target="_blank">Upcoming Events</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/kubernetes-tutorial/" target="_blank">Kubernetes</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/istio-tutorial/" target="_blank">Istio</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/quarkus-tutorial/" target="_blank">Quarkus</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/knative-tutorial/" target="_blank">Knative</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/tekton-tutorial/" target="_blank">Tekton</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="managed-apim-workshop" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html"></a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-getting-started.html">1. Red Hat OpenShift API Management An Introduction</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#installrhoam">Installing RHOAM Add-on</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#accessenv">Accessing your Environment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#access3scale">Accessing Red Hat 3scale API Management and Red Hat Single Sign-On</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#createdeployproject">Create and Deploy a Project on OpenShift Dedicated</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#testquarkusapp">Test the Quarkus Application and Deploy to OpenShift Dedicated</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-service-discover.html">2. Using Red Hat OpenShift API Management &amp; Service Discovery</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#preparequarkus">Prepare your Quarkus API for Service Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#importquarkusapi">Import your Quarkus API using Service Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#createapplicationplan">Create an Application Plan in 3scale API Management</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#configdevaccount">Configure a Developer Account to use the Application</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#testapi">Test the API</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-rate-limit-monitoring.html">3.Red Hat OpenShift API Management Rate Limit Monitoring</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-rate-limit-monitoring.html#access-grafana-monit">Accessing the Grafana Monitoring Instance</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-rate-limit-monitoring.html#view-grafana-monit">Viewing the Grafana Monitoring Dashboard</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-rate-limit-monitoring.html#dashboard-overview">Dashboard Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-rate-limit-monitoring.html#per-min-api-graph">Per Minute API Requests Graph</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-rate-limit-monitoring.html#filter-per-min-api-graph">Filtered Per Minute API Requests Graph</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-secure-with-openid.html">4. Securing APIs with OpenID Connect and Single Sign-On on Red Hat OpenShift API Management</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#create-a-realm">Create a Realm on Single Sign-On</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#createkafkatopic">3scale and Single Sign-On Integration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#toolsimage">Create API in 3scale API Management and Configure to Use OpenID Connect</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Create Application</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Verify Application Client in Red Hat SSO</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Test the OIDC Secured API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Promote to Staging and Production APIcast</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Test the API with Authorization Code flow.</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="05-3scale-toolbox.html">5. Use 3Scale toolbox with Red Hat OpenShift API Management</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#deployquarkusapplication">Installation and Usage of 3Scale toolbox</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#deployquarkusapplication">Create API resources with 3Scale toolbox</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#deployquarkusapplication">Manage remote access credentials</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#deployquarkusapplication">Import OpenAPI Spec</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#deployquarkusapplication">Create an Application Plan</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#deployquarkusapplication">Create an Application</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="06-cluster-monitoring.html">6. Red Hat OpenShift API Management 3scale and OpenShift Dedicated Cluster Monitoring</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="06-cluster-monitoring.html#deployquarkusapplication">Accessing the Middleware Monitoring Stack</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="06-cluster-monitoring.html#deployquarkusapplication">Accessing the Grafana Dashboards</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="06-cluster-monitoring.html#deployquarkusapplication">Viewing Managed Service Resource Usage</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="06-cluster-monitoring.html#deployquarkusapplication">Viewing Managed Service Resource Usage as a Fraction of Cluster Totals</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Red Hat OpenShift API Management Workshop</a></li>
+    <li><a href="05-3scale-toolbox.html">5. Use 3Scale toolbox with Red Hat OpenShift API Management</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jayachristina/red-hat-openshift-apim/edit/main/documentation/modules/ROOT/pages/05-3scale-toolbox.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Use 3scale toolbox with Red Hat OpenShift API Management</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <em>3scale toolbox</em> is a command line interface (CLI) for the 3scale API Management platform. The aim of the 3scale toolbox is to help administrators operate their APIs, and to help them automate the delivery of these APIs through Continuous Delivery pipelines.</p>
+</div>
+<div class="paragraph">
+<p>Compared to the RESTful 3scale admin APIs, the 3scale toolbox has a coarser granularity and as such is easier and less verbose to work with than using directly the fine-grained 3scale admin APIs.</p>
+</div>
+<div class="paragraph">
+<p>The 3scale toolbox follows the usual conventions from CLIs:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Output a non-zero status code on error.</p>
+</li>
+<li>
+<p><em>stderr</em> contains error messages; <em>stdout</em> contains useful output.</p>
+</li>
+<li>
+<p>The output can be JSON or YAML, making it easy to be parsed by scripts or pipelines.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Another characteristic of the 3scale toolbox is that most operations are idempotent. This means you can express the desired state of the system and the 3scale toolbox will act accordingly: update the existing configuration if it exists, create it when it is missing. Idempotency greatly helps building more reliable automation tools in case of an outage or transient perturbation.</p>
+</div>
+<div class="paragraph">
+<p>The 3scale API Management is written in Ruby. It is a wrapper around the 3scale APIs.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation_and_usage_of_3scale_toolbox"><a class="anchor" href="#_installation_and_usage_of_3scale_toolbox"></a>Installation and Usage of 3scale toolbox</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The officially supported method of installing the 3scale toolbox is using the 3scale toolbox container image, and use <code>docker</code> or <code>podman</code> to run the container. This avoids to having to install a Ruby runtime on your workstation.</p>
+</div>
+<div class="paragraph">
+<p>However, there are are also alternative, albeit unsupported, ways to install and run the toolbox on different target platforms, including RHEL/CentOS/Fedora, Mac and Windows. Please refer to <a href="https://github.com/3scale-labs/3scale_toolbox_packaging" class="bare">https://github.com/3scale-labs/3scale_toolbox_packaging</a> for installation instructions.</p>
+</div>
+<div class="paragraph">
+<p>In this lab you will run the 3scale toolbox with Podman or Docker (on a Mac).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The instructions in this lab assume you have installed Podman on your workstation. If you want to use Docker instead, substitute <code>podman</code> with <code>docker</code> in the commands.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To download the 3scale toolbox image, you need a Red Hat Customer Portal account.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Log in to the Red Hat Ecosystem Catalog (registry.redhat.io):</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ podman login registry.redhat.io
+Username: &lt;REDHAT_CUSTOMER_PORTAL_ACCOUNT_USERNAME&gt;
+Password: &lt;REDHAT_CUSTOMER_PORTAL_ACCOUNT_PASSWORD&gt;
+Login Succeeded!</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Pull the toolbox container image. The version of the image needs to match the version of the 3scale API Management platform:</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ podman pull registry.redhat.io/3scale-amp2/toolbox-rhel7:3scale2.10</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Verify the installation:</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ podman run --rm registry.redhat.io/3scale-amp2/toolbox-rhel7:3scale2.10 3scale help</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Expected Output</div>
+<div class="content">
+<pre>NAME
+    3scale - 3scale toolbox
+
+USAGE
+    3scale &lt;sub-command&gt; [options]
+
+DESCRIPTION
+    3scale toolbox to manage your API from the terminal.
+
+COMMANDS
+    account              account super command
+    activedocs           activedocs super command
+    application          application super command
+    application-plan     application-plan super command
+    backend              backend super command
+    copy                 copy super command
+    help                 show help
+    import               import super command
+    method               method super command
+    metric               metric super command
+    policy-registry      policy-registry super command
+    product              product super command
+    proxy-config         proxy-config super command
+    remote               remotes super command
+    service              services super command
+    update               [DEPRECATED] update super command
+
+OPTIONS
+    -c --config-file=&lt;value&gt;      3scale toolbox configuration file (default:
+                                  /opt/app-root/src/.3scalerc.yaml)
+    -h --help                     show help for this command
+    -k --insecure                 Proceed and operate even for server
+                                  connections otherwise considered insecure
+    -v --version                  Prints the version of this command
+       --verbose                  Verbose mode</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_api_resources_with_3scale_toolbox"><a class="anchor" href="#_create_api_resources_with_3scale_toolbox"></a>Create API resources with 3scale toolbox</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this section of the lab, you use the 3scale toolbox to create API resources on 3scale in a programmatic way.</p>
+</div>
+<div class="paragraph">
+<p>You will use the same Quarkus application which you leveraged in previous labs as well.</p>
+</div>
+<div class="sect2">
+<h3 id="_manage_remote_access_credentials"><a class="anchor" href="#_manage_remote_access_credentials"></a>Manage remote access credentials</h3>
+<div class="paragraph">
+<p>To be able to interface with the 3scale API Management platform, the 3scale toolbox requires an access token and the URL to the 3scale admin portal.</p>
+</div>
+<div class="paragraph">
+<p>3scale has two types of tokens: access tokens (created by the user) and service tokens (automatically created when a new service is deployed in 3scale).</p>
+</div>
+<div class="paragraph">
+<p>Access tokens allow API provider admins and members to authenticate against the 3scale admin APIs – Billing, Account Management, and Analytics.</p>
+</div>
+<div class="paragraph">
+<p>An access token may provide either read and write access, or read only.</p>
+</div>
+<div class="paragraph">
+<p>Access tokens work according to the member’s rights. Admins can create tokens to authenticate against all three 3scale APIs. Members will be limited by their permissions to access the different parts of the Admin Portal. For example, if a member does not have access to the Billing area, they will not be able to create a token to authenticate against the Billing API.</p>
+</div>
+<div class="paragraph">
+<p>Tokens are not stored on 3scale. Once created, the token cannot be recovered from 3scale. In case the value is lost, the token needs to be deleted to invalidate it, and a new one created.</p>
+</div>
+<div class="paragraph">
+<p>In this section of the lab you create an access token for the 3scale admin APIs.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Log in to 3scale API Management using your configured IdP.</p>
+</li>
+<li>
+<p>Navigate to <strong>Account Settings</strong> by clicking on the <span class="image unresolved integr8ly-img-responsive"><img src="images/lab5-account-settings-icon.png" alt="Account Settings Icon"></span> icon on the right of the top menu bar.</p>
+</li>
+<li>
+<p>On the <em>Account Settings Overview</em> page, navigate to <strong>Personal &#8594; Tokens</strong>.</p>
+</li>
+<li>
+<p>On the <em>Access tokens</em> page, click <strong>Add Access Token</strong> to create a new access token.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab5/lab5-3scale-create-access-token.png" alt="3scale Create Access Token">
+</div>
+</div>
+</li>
+<li>
+<p>On the <em>New Access Token</em> page, enter the following values:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Name</strong>: <code>admin token</code></p>
+</li>
+<li>
+<p><strong>Scopes</strong>: check <code>Account Management API</code>, <code>Analytics API</code>, <code>Policy Registry API</code>.</p>
+</li>
+<li>
+<p><strong>Permission</strong>: <code>Read &amp; Write</code></p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab5/lab5-3scale-new-access-token.png" alt="3scale New Access Token">
+</div>
+</div>
+</li>
+<li>
+<p>Click <strong>Create Access token</strong> to create the token.</p>
+</li>
+<li>
+<p>On the next page, copy the value of the token, and click <strong>I have copied the token</strong>.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The access token and URL can be passed with every toolbox command in the format <code><a href="https://&lt;ACCESS" class="bare">https://&lt;ACCESS</a> TOKEN&gt;@&lt;3SCALE_HOSTNAME&gt;</code>.</p>
+</div>
+<div class="paragraph">
+<p>But to make working with the toolbox easier, the remote access credentials can also be added to the toolbox image.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add the remote credentials to the 3scale toolbox image. Here you use <code>rhoam</code> as identifier for the credentials. Replace <code>&lt;ACCESS_TOKEN&gt;</code> with the value of the token you created in the previous section, and &lt;3SCALE_HOSTNAME&gt; with the host name of the 3scale API Management platform.</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ podman run --name toolbox-container registry.redhat.io/3scale-amp2/toolbox-rhel7:3scale2.10 3scale remote add rhoam https://&lt;ACCESS_TOKEN&gt;@&lt;3SCALE_HOSTNAME&gt;</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Commit the image in a new image that includes the remote access credentials.</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ podman commit toolbox-container toolbox</pre>
+</div>
+</div>
+</li>
+<li>
+<p>For the remainder of the lab you can use the newly created <code>toolbox</code> image to access the remote 3scale API Management instance. For example, to list the <em>Services</em> defined on the 3scale API Management instance:</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ podman run --rm toolbox 3scale service list rhoam</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample Output</div>
+<div class="content">
+<pre>ID      NAME    SYSTEM_NAME
+2       API     api
+21      rhoam-openapi   btison-lab-rhoam-openapi
+22      RHOAM API OIDC  rhoam_api_oidc</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Storing secrets for toolbox in a container is a potential security risk, for example when distributing the container with secrets to other users or using the container for automation.
+In this lab you use it mostly for convenience purposes.
+In real world environments you should use secured volumes in Podman or OpenShift secrets (if running a CI/CD pipeline on OpenShift for example).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>At any time you can use the <code>help</code> function of the toolbox to get more details about a command.
+For example, to get help about the <code>import openapi</code> command:</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ podman run toolbox 3scale import openapi --help</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Output</div>
+<div class="content">
+<pre>NAME
+    openapi - Import API definition in OpenAPI specification from a local file or URL
+
+USAGE
+    3scale import openapi [opts] -d &lt;destination&gt; &lt;spec&gt;
+    (/path/to/your/spec/file.[json|yaml|yml] OR
+    http[s]://domain/resource/path.[json|yaml|yml])
+
+DESCRIPTION
+    Using an API definition format like OpenAPI, import to your 3scale API
+    directly from a local OpenAPI spec compliant file or a remote URL
+
+OPTIONS
+       --activedocs-hidden                        Create ActiveDocs in hidden
+                                                  state
+       --backend-api-host-header=&lt;value&gt;          Custom host header sent by
+                                                  the API gateway to the
+                                                  backend API
+       --backend-api-secret-token=&lt;value&gt;         Custom secret token sent by
+                                                  the API gateway to the
+                                                  backend API
+    -d --destination=&lt;value&gt;                      3scale target instance.
+                                                  Format:
+                                                  "http[s]://&lt;authentication&gt;@3scale_domain"
+       --default-credentials-userkey=&lt;value&gt;      Default credentials policy
+                                                  userkey
+       --oidc-issuer-endpoint=&lt;value&gt;             OIDC Issuer Endpoint
+       --override-private-base-url=&lt;value&gt;        Custom private base URL
+       --override-private-basepath=&lt;value&gt;        Override the basepath for
+                                                  the private URLs
+       --override-public-basepath=&lt;value&gt;         Override the basepath for
+                                                  the public URLs
+       --prefix-matching                          Use prefix matching instead
+                                                  of strict matching on
+                                                  mapping rules derived from
+                                                  openapi operations
+       --production-public-base-url=&lt;value&gt;       Custom public production
+                                                  URL
+       --skip-openapi-validation                  Skip OpenAPI schema
+                                                  validation
+       --staging-public-base-url=&lt;value&gt;          Custom public staging URL
+    -t --target_system_name=&lt;value&gt;               Target system name
+
+OPTIONS FOR IMPORT
+    -c --config-file=&lt;value&gt;                      3scale toolbox
+                                                  configuration file
+                                                  (default:
+                                                  /opt/app-root/src/.3scalerc.yaml)
+    -h --help                                     show help for this command
+    -k --insecure                                 Proceed and operate even
+                                                  for server connections
+                                                  otherwise considered
+                                                  insecure
+    -v --version                                  Prints the version of this
+                                                  command
+       --verbose                                  Verbose mode</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_import_openapi_spec"><a class="anchor" href="#_import_openapi_spec"></a>Import OpenAPI Spec</h3>
+<div class="paragraph">
+<p>The 3scale toolbox allows you to import an OpenAPI specification document for an API. The OpenAPI specification will be introspected and based upon its structure a number of API artifacts will be created on 3scale API Management, including a product, backend, mapping rules and various settings.</p>
+</div>
+<div class="paragraph">
+<p>In this lab you import the OpenAPI specification for the Quarkus application you used in previous labs. The OpenAPI specification is structured a bit differently compared to the version which is served by the application.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Review the OpenAPI specification at <a href="https://raw.githubusercontent.com/btison/rhoam-introductory-labs/master/etc/fruits-api.json" class="bare">https://raw.githubusercontent.com/btison/rhoam-introductory-labs/master/etc/fruits-api.json</a>. Note the following:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The document contains a <code>SecurityScheme</code>, specifying that an API Key is expected in a header with name <code>user_key</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre>    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "user_key"
+      }
+    }</pre>
+</div>
+</div>
+</li>
+<li>
+<p>The document has a single <code>servers.url</code> element. The <code>server.url</code> element’s path component (<code>/</code>) is used as the OpenAPI’s <code>basePath</code> property.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Import the OpenAPI document into 3scale using the 3scale toolbox:</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ export PROJECT_NAME=&lt;project where you deployed the Quarkus application&gt;
+$ podman run --rm toolbox 3scale import openapi \
+    -d rhoam \
+    https://raw.githubusercontent.com/btison/rhoam-introductory-labs/master/etc/fruits-api.json \
+    --target_system_name rhoam-api-toolbox \
+    --override-public-basepath=/v1 \
+    --override-private-base-url=http://rhoam-openapi.$PROJECT_NAME.svc:8080</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>target-system-name</code> specifies the system name that is used for the <em>Product</em> and <em>Backend</em> that will be created.</p>
+</li>
+<li>
+<p><code>--override-public-basepath</code> specifies the base path for the exposed API. For the sake of this exercise you decide to expose the API using the <code>/v1</code> base path, rather than the <code>/</code> base path defined in the OpenAPI document.</p>
+</li>
+<li>
+<p><code>--override-private-base-url</code> specifies the private base URL for the API. This URL points to the Quarkus application deployed on OpenShift.</p>
+</li>
+<li>
+<p>The output of the 3scale toolbox command looks like:</p>
+<div class="listingblock">
+<div class="title">Sample Output</div>
+<div class="content">
+<pre>Created service id: 23, name: Fruits API
+Service proxy updated
+destroying all mapping rules
+Created GET /v1/fruits$ endpoint
+Created POST /v1/fruits$ endpoint
+Created DELETE /v1/fruits$ endpoint
+Service policies updated</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Navigate to the 3Scale Admin Portal and review the API resources created by the 3scale toolbox command. These include:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>An <em>API Product</em> <code>Fruits API</code>. The name corresponds to the name in the OpenAPI spec.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab5/lab5-3scale-toolbox-import-openapi-product.png" alt="3scale toolbox import OpenAPI Product">
+</div>
+</div>
+</li>
+<li>
+<p>A <em>Backend</em> <code>Fruits API Backend</code>.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab5/lab5-3scale-toolbox-import-openapi-product.png" alt="3scale toolbox import OpenAPI Backend">
+</div>
+</div>
+</li>
+<li>
+<p>API Product Settings including the Public Base URLs, and authentication settings (API Key as <code>user_key</code> HTTP header)</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab5/lab5-3scale-toolbox-import-openapi-product-settings.png" alt="3scale toolbox import OpenAPI settings">
+</div>
+</div>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab5/lab5-3scale-toolbox-import-openapi-product-auth.png" alt="3scale toolbox import OpenAPI authentication">
+</div>
+</div>
+</li>
+<li>
+<p>Mapping Rules for the 3 operations defined in the OpenAPI specification.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab5/lab5-3scale-toolbox-import-openapi-product-mapping-rules.png" alt="3scale toolbox import OpenAPI mapping rules">
+</div>
+</div>
+<div class="paragraph">
+<p>Note that the relative URLs of the mapping rules follow the specified public basepath.</p>
+</div>
+</li>
+<li>
+<p>Methods for the 3 operations defined in the OpenAPI specification.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab5/lab5-3scale-toolbox-import-openapi-product-methods.png" alt="3scale toolbox import OpenAPI methods">
+</div>
+</div>
+</li>
+<li>
+<p>A <em>URL Rewriting</em> policy.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab5/lab5-3scale-toolbox-import-openapi-product-policy.png" alt="3scale toolbox import OpenAPI policy">
+</div>
+</div>
+<div class="paragraph">
+<p>This policy translates the public base path of the URL (<code>/v1</code>) to the base path of the backend application (<code>/</code>).</p>
+</div>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab5/lab5-3scale-toolbox-import-openapi-product-policy-details.png" alt="3scale toolbox import OpenAPI policy details">
+</div>
+</div>
+</li>
+<li>
+<p>ActiveDocs for the API.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab5/lab5-3scale-toolbox-import-openapi-product-activedocs.png" alt="3scale toolbox import OpenAPI activedocs">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>You can change the name of the generated <em>Product</em>.</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ podman run --rm toolbox 3scale service apply rhoam rhoam-api-toolbox --name="Fruits API V1"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>On the 3scale Admin Portal this becomes:</p>
+</div>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab5/lab5-3scale-toolbox-update-service.png" alt="3scale toolbox update service">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_an_application_plan"><a class="anchor" href="#_create_an_application_plan"></a>Create an Application Plan</h3>
+<div class="paragraph">
+<p>The next step in deploying the API is defining one or more application plans.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create an application plan:</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ podman run --rm toolbox 3scale application-plan apply rhoam rhoam-api-toolbox rhoam-api-toolbox/basic -n "Fruits API Basic Plan" --default --publish</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample output</div>
+<div class="content">
+<pre>Applied application plan id: 36; Default: true; Published</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>On the 3scale Admin Portal:</p>
+</div>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab5/lab5-3scale-toolbox-create-application-plan.png" alt="3scale toolbox create application plan">
+</div>
+</div>
+</li>
+<li>
+<p>The toolbox also allows to export or import an application plan definition in <em>yaml</em> format. This allows to define more complex application plans including limits and pricing rules.<br>
+As an example, you can update the application plan created in the previous step to exclude <code>POST</code> and <code>DELETE</code> operations.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a file with the application plan definition:</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ echo "
+---
+plan:
+  name: Fruits API Basic Plan
+  state: published
+  setup_fee: 0.0
+  cost_per_month: 0.0
+  trial_period_days: 0
+  cancellation_period: 0
+  approval_required: false
+  system_name: rhoam-api-toolbox/basic
+limits:
+- period: eternity
+  value: 0
+  metric_system_name: postfruits
+- period: eternity
+  value: 0
+  metric_system_name: deletefruits
+" | tee /tmp/application-plan.yml</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Import the definition file with the 3scale toolbox. The file you just created is mounted into the toolbox container:</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ podman run --rm -v /tmp/application-plan.yml:/tmp/application-plan.yml toolbox 3scale application-plan import --file=/tmp/application-plan.yml rhoam rhoam-api-toolbox</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample output</div>
+<div class="content">
+<pre>Application plan updated: 55
+Created plan limit: [metric: 59, {"period"=&gt;"eternity", "value"=&gt;0}]
+Created plan limit: [metric: 60, {"period"=&gt;"eternity", "value"=&gt;0}]</pre>
+</div>
+</div>
+</li>
+<li>
+<p>On the 3scale Admin Portal:</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab5/lab5-3scale-toolbox-update-application-plan.png" alt="3scale toolbox update application plan">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_an_application"><a class="anchor" href="#_create_an_application"></a>Create an Application</h3>
+<div class="paragraph">
+<p>To create an application, an application plan is combined with an account and a service.
+At this moment the toolbox does not allow to create accounts, so you will use an existing account for the application.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create an application for the <code>Developer</code> account:</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ podman run --rm toolbox 3scale application apply rhoam  1234567890abcdef --account=john --name="Fruits V1" --plan=rhoam-api-toolbox/basic --service=rhoam-api-toolbox</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>1234567890abcdef</code> is the user_key for this application</p>
+</li>
+<li>
+<p><code>john</code> is the username of the admin user of the account. The account can be referenced by the account ID, or the username, email, or user_id of the admin user of the account.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Verify the existence of the Application on the 3scale Admin Portal:</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab5/lab5-3scale-toolbox-create-application.png" alt="3scale toolbox create application">
+</div>
+</div>
+</li>
+<li>
+<p>At this point you can test the API on the staging APIcast:</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ curl -v -X GET -H "Accept: application/json" -H "user_key: 1234567890abcdef" https://rhoam-api-toolbox-3scale-apicast-staging.apps.&lt;OPENSHIFT_BASE_URL&gt;/v1/fruits</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Expected Response</div>
+<div class="content">
+<pre>*   Trying 34.205.xxx.xxx:443...
+* Connected to rhoam-api-toolbox-3scale-apicast-staging.apps.yoyodyne.xxx.yyy (34.205.xxx.xxx) port 443 (#0)
+[...]]
+&gt; GET /v1/fruits HTTP/1.1
+&gt; Host: rhoam-api-toolbox-3scale-apicast-staging.apps.yoyodyne.xxx.yyy
+&gt; User-Agent: curl/7.71.1
+&gt; Accept: application/json
+&gt; user_key: 1234567890abcdef
+&gt;
+* Mark bundle as not supporting multiuse
+&lt; HTTP/1.1 200 OK
+&lt; server: envoy
+&lt; date: Sat, 10 Apr 2021 16:30:48 GMT
+&lt; content-type: application/json
+&lt; content-length: 99
+&lt; x-envoy-upstream-service-time: 129
+&lt; set-cookie: e5891a1fea7fd54d219ace35f200347d=94ac67ae4f1c90456f1481a5227e5f11; path=/; HttpOnly; Secure; SameSite=None
+&lt; cache-control: private
+&lt;
+* Connection #0 to host rhoam-api-toolbox-3scale-apicast-staging.apps.yoyodyne.xxx.yyy left intact
+[{"name":"Apple","description":"Winter fruit"},{"name":"Pineapple","description":"Tropical fruit"}]</pre>
+</div>
+</div>
+</li>
+<li>
+<p>If the call to the staging APIcast succeeds, you can promote the API to production:</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ podman run toolbox 3scale proxy-config promote rhoam  rhoam-api-toolbox</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample output</div>
+<div class="content">
+<pre>Proxy Configuration version 4 promoted to 'production'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Test the API on the production APIcast:</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ $ curl -v -X GET -H "Accept: application/json" -H "user_key: 1234567890abcdef" https://rhoam-api-toolbox-3scale-apicast-production.apps.&lt;OPENSHIFT_BASE_URL&gt;/v1/fruits</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You have successfully deployed an API on 3scale using the 3scale toolbox.</p>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="04-secure-with-openid.html">4. Securing APIs with OpenID Connect and Single Sign-On on Red Hat OpenShift API Management</a></span>
+  <span class="next"><a href="06-cluster-monitoring.html">6. Red Hat OpenShift API Management 3scale and OpenShift Dedicated Cluster Monitoring</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../../_/js/vendor/clipboard.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

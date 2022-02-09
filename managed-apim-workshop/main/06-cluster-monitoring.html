@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Red Hat OpenShift API Management 3scale and OpenShift Dedicated Cluster Monitoring :: Red Hat OpenShift API Management</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/managed-apim-workshop/managed-apim-workshop/main/06-cluster-monitoring.html">
+    <link rel="prev" href="05-3scale-toolbox.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="../../_/img/NewRHDFullLogo_4-color_white-wordmark.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="https://redhat-scholars.github.io/managed-apim-workshop">Red Hat OpenShift API Management</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://developers.redhat.com/ebooks/" target="_blank">Books</a>
+        <a class="navbar-item" href="https://developers.redhat.com/cheatsheets/" target="_blank">Cheat Sheets</a>
+        <a class="navbar-item" href="https://developers.redhat.com/events/" target="_blank">Upcoming Events</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/kubernetes-tutorial/" target="_blank">Kubernetes</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/istio-tutorial/" target="_blank">Istio</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/quarkus-tutorial/" target="_blank">Quarkus</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/knative-tutorial/" target="_blank">Knative</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/tekton-tutorial/" target="_blank">Tekton</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="managed-apim-workshop" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html"></a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-getting-started.html">1. Red Hat OpenShift API Management An Introduction</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#installrhoam">Installing RHOAM Add-on</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#accessenv">Accessing your Environment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#access3scale">Accessing Red Hat 3scale API Management and Red Hat Single Sign-On</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#createdeployproject">Create and Deploy a Project on OpenShift Dedicated</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#testquarkusapp">Test the Quarkus Application and Deploy to OpenShift Dedicated</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-service-discover.html">2. Using Red Hat OpenShift API Management &amp; Service Discovery</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#preparequarkus">Prepare your Quarkus API for Service Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#importquarkusapi">Import your Quarkus API using Service Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#createapplicationplan">Create an Application Plan in 3scale API Management</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#configdevaccount">Configure a Developer Account to use the Application</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#testapi">Test the API</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-rate-limit-monitoring.html">3.Red Hat OpenShift API Management Rate Limit Monitoring</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-rate-limit-monitoring.html#access-grafana-monit">Accessing the Grafana Monitoring Instance</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-rate-limit-monitoring.html#view-grafana-monit">Viewing the Grafana Monitoring Dashboard</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-rate-limit-monitoring.html#dashboard-overview">Dashboard Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-rate-limit-monitoring.html#per-min-api-graph">Per Minute API Requests Graph</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-rate-limit-monitoring.html#filter-per-min-api-graph">Filtered Per Minute API Requests Graph</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-secure-with-openid.html">4. Securing APIs with OpenID Connect and Single Sign-On on Red Hat OpenShift API Management</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#create-a-realm">Create a Realm on Single Sign-On</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#createkafkatopic">3scale and Single Sign-On Integration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#toolsimage">Create API in 3scale API Management and Configure to Use OpenID Connect</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Create Application</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Verify Application Client in Red Hat SSO</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Test the OIDC Secured API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Promote to Staging and Production APIcast</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Test the API with Authorization Code flow.</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="05-3scale-toolbox.html">5. Use 3Scale toolbox with Red Hat OpenShift API Management</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Installation and Usage of 3Scale toolbox</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Create API resources with 3Scale toolbox</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Manage remote access credentials</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Import OpenAPI Spec</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Create an Application Plan</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Create an Application</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="06-cluster-monitoring.html">6. Red Hat OpenShift API Management 3scale and OpenShift Dedicated Cluster Monitoring</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#deployquarkusapplication">Accessing the Middleware Monitoring Stack</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#deployquarkusapplication">Accessing the Grafana Dashboards</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#deployquarkusapplication">Viewing Managed Service Resource Usage</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#deployquarkusapplication">Viewing Managed Service Resource Usage as a Fraction of Cluster Totals</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Red Hat OpenShift API Management Workshop</a></li>
+    <li><a href="06-cluster-monitoring.html">6. Red Hat OpenShift API Management 3scale and OpenShift Dedicated Cluster Monitoring</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jayachristina/red-hat-openshift-apim/edit/main/documentation/modules/ROOT/pages/06-cluster-monitoring.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Red Hat OpenShift API Management 3scale and OpenShift Dedicated Cluster Monitoring</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Both Red Hat OpenShift API Management and OpenShift Dedicated include a monitoring stack out of the box.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Monitoring resources can only be viewed by OpenShift user accounts that have <strong>dedicated-admin</strong> or <strong>cluster-admin</strong> permissions.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_accessing_the_middleware_monitoring_stack"><a class="anchor" href="#_accessing_the_middleware_monitoring_stack"></a>Accessing the Middleware Monitoring Stack</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to the OpenShift Dedicated console for your cluster and login as a <strong>dedicated-admin</strong> user.</p>
+</li>
+<li>
+<p>Select the <strong>Administrator</strong> perspective from the side-menu.</p>
+</li>
+<li>
+<p>Expand the <strong>Networking</strong> entry in the side-menu and select <strong>Routes</strong>.</p>
+</li>
+<li>
+<p>Choose the <code>redhat-rhoam-middleware-monitoring-operator</code> from the <strong>Project</strong> dropdown.</p>
+</li>
+<li>
+<p>The following routes should be listed, similar to the screenshot.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Grafana</p>
+</li>
+<li>
+<p>Prometheus</p>
+</li>
+<li>
+<p>Alertmanager</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/lab6/lab-6-mw-monitor-route-list.png" alt="Middleware Monitoring Routes">
+</div>
+</div>
+<div class="sect2">
+<h3 id="_accessing_the_grafana_dashboards"><a class="anchor" href="#_accessing_the_grafana_dashboards"></a>Accessing the Grafana Dashboards</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Click the URL that corresponds to the Grafana service.</p>
+</li>
+<li>
+<p>A new browser tab will open and prompt you to login using OpenShift OAuth. Click the <strong>Log in with OpenShift</strong> button.</p>
+</li>
+<li>
+<p>Authenticate using your configured IdP.</p>
+</li>
+<li>
+<p>Authorize the account permissions request by choosing <strong>Allow selected permissions</strong>.</p>
+<div class="paragraph">
+<p>You should be redirected to a Grafana instance homepage after successfully authenticating and authorizing account access.</p>
+</div>
+</li>
+<li>
+<p>Hover over the tile icon on the left and select <strong>Manage</strong>.</p>
+</li>
+<li>
+<p>Select the <strong>List</strong> view icon.</p>
+<div class="paragraph">
+<p>All the dashboards that are available to you should be listed, similar to the following image.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/lab6/lab-6-grafana-dashboard-list.png" alt="Grafana Dashboards">
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The <strong>Critical SLO summary</strong> dashboard provides the viewer with information relating to Service Level Objectives. Specifically, it indicates the availability of RHOAM components within the overall SLA agreement a 28 day period.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/lab6/lab-6-mw-monitor-slo.png" alt="SLO Grafana Dashboard">
+</div>
+</div>
+<div class="paragraph">
+<p>The <strong>CRO Resources</strong> dashboard provides a view of CPU and Memory metrics, and the status of underlying cloud resources. Postgres and Redis are two such cloud resources, and are provided by the underlying cloud vendor, e.g AWS ElastiCache for Redis.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/lab6/lab-6-mw-monitor-cr.png" alt="CRO Grafana Dashboard">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_viewing_managed_service_resource_usage"><a class="anchor" href="#_viewing_managed_service_resource_usage"></a>Viewing Managed Service Resource Usage</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open the OpenShift Dedicated console for your cluster and login as a <strong>dedicated-admin</strong> user.</p>
+</li>
+<li>
+<p>Navigate to the <strong>Routes</strong> screen in the <strong>redhat-rhoam-middleware-monitoring-operator</strong> Project.</p>
+</li>
+<li>
+<p>Open the Grafana Route and navigate to the dashboards list.</p>
+</li>
+<li>
+<p>Select the <strong>Resource Usage by Namespace</strong> dashboard.</p>
+</li>
+<li>
+<p>Click the <strong>namespace</strong> dropdown.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/lab6/lab-6-mw-monitor-namespaces.png" alt="Middleware Namespace Resource Grafana Dashboard">
+</div>
+</div>
+</li>
+<li>
+<p>Choose the <strong>redhat-rhoam-3scale</strong> entry.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This view can be used to monitor CPU and Memory usage by APIcast, Zync, and other 3scale API Management Pods.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_viewing_managed_service_resource_usage_as_a_fraction_of_cluster_totals"><a class="anchor" href="#_viewing_managed_service_resource_usage_as_a_fraction_of_cluster_totals"></a>Viewing Managed Service Resource Usage as a Fraction of Cluster Totals</h3>
+<div class="paragraph">
+<p>To view the resource usage of the Managed Service components with respect to overall cluster resource usage/availability:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open the OpenShift Dedicated console for your cluster and login as a <strong>dedicated-admin</strong> user.</p>
+</li>
+<li>
+<p>Navigate to the <strong>Routes</strong> screen in the <strong>redhat-rhoam-middleware-monitoring-operator</strong> Project.</p>
+</li>
+<li>
+<p>Open the Grafana Route and navigate to the dashboards list.</p>
+</li>
+<li>
+<p>Select the <strong>Resource Usage for Cluster</strong> dashboard.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/lab6/lab-6-mw-monitor-cluster.png" alt="Middleware Resource for Cluster Grafana Dashboard">
+</div>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="05-3scale-toolbox.html">5. Use 3Scale toolbox with Red Hat OpenShift API Management</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../../_/js/vendor/clipboard.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

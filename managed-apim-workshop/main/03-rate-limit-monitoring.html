@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Red Hat OpenShift API Management Rate Limit Monitoring :: Red Hat OpenShift API Management</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/managed-apim-workshop/managed-apim-workshop/main/03-rate-limit-monitoring.html">
+    <link rel="prev" href="02-service-discover.html">
+    <link rel="next" href="04-secure-with-openid.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="../../_/img/NewRHDFullLogo_4-color_white-wordmark.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="https://redhat-scholars.github.io/managed-apim-workshop">Red Hat OpenShift API Management</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://developers.redhat.com/ebooks/" target="_blank">Books</a>
+        <a class="navbar-item" href="https://developers.redhat.com/cheatsheets/" target="_blank">Cheat Sheets</a>
+        <a class="navbar-item" href="https://developers.redhat.com/events/" target="_blank">Upcoming Events</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/kubernetes-tutorial/" target="_blank">Kubernetes</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/istio-tutorial/" target="_blank">Istio</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/quarkus-tutorial/" target="_blank">Quarkus</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/knative-tutorial/" target="_blank">Knative</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/tekton-tutorial/" target="_blank">Tekton</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="managed-apim-workshop" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html"></a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-getting-started.html">1. Red Hat OpenShift API Management An Introduction</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#installrhoam">Installing RHOAM Add-on</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#accessenv">Accessing your Environment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#access3scale">Accessing Red Hat 3scale API Management and Red Hat Single Sign-On</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#createdeployproject">Create and Deploy a Project on OpenShift Dedicated</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#testquarkusapp">Test the Quarkus Application and Deploy to OpenShift Dedicated</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-service-discover.html">2. Using Red Hat OpenShift API Management &amp; Service Discovery</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#preparequarkus">Prepare your Quarkus API for Service Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#importquarkusapi">Import your Quarkus API using Service Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#createapplicationplan">Create an Application Plan in 3scale API Management</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#configdevaccount">Configure a Developer Account to use the Application</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#testapi">Test the API</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-rate-limit-monitoring.html">3.Red Hat OpenShift API Management Rate Limit Monitoring</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#access-grafana-monit">Accessing the Grafana Monitoring Instance</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#view-grafana-monit">Viewing the Grafana Monitoring Dashboard</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#dashboard-overview">Dashboard Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#per-min-api-graph">Per Minute API Requests Graph</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#filter-per-min-api-graph">Filtered Per Minute API Requests Graph</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-secure-with-openid.html">4. Securing APIs with OpenID Connect and Single Sign-On on Red Hat OpenShift API Management</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#create-a-realm">Create a Realm on Single Sign-On</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#createkafkatopic">3scale and Single Sign-On Integration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#toolsimage">Create API in 3scale API Management and Configure to Use OpenID Connect</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Create Application</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Verify Application Client in Red Hat SSO</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Test the OIDC Secured API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Promote to Staging and Production APIcast</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Test the API with Authorization Code flow.</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="05-3scale-toolbox.html">5. Use 3Scale toolbox with Red Hat OpenShift API Management</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Installation and Usage of 3Scale toolbox</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Create API resources with 3Scale toolbox</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Manage remote access credentials</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Import OpenAPI Spec</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Create an Application Plan</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Create an Application</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="06-cluster-monitoring.html">6. Red Hat OpenShift API Management 3scale and OpenShift Dedicated Cluster Monitoring</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="06-cluster-monitoring.html#deployquarkusapplication">Accessing the Middleware Monitoring Stack</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="06-cluster-monitoring.html#deployquarkusapplication">Accessing the Grafana Dashboards</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="06-cluster-monitoring.html#deployquarkusapplication">Viewing Managed Service Resource Usage</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="06-cluster-monitoring.html#deployquarkusapplication">Viewing Managed Service Resource Usage as a Fraction of Cluster Totals</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Red Hat OpenShift API Management Workshop</a></li>
+    <li><a href="03-rate-limit-monitoring.html">3.Red Hat OpenShift API Management Rate Limit Monitoring</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jayachristina/red-hat-openshift-apim/edit/main/documentation/modules/ROOT/pages/03-rate-limit-monitoring.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Red Hat OpenShift API Management Rate Limit Monitoring</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>RHOAM is a hosted and managed service, and a result:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Various subscription levels are available.</p>
+</li>
+<li>
+<p>Subscription levels are segmented based on a maximum throughput.</p>
+</li>
+<li>
+<p>Throughput is measured in API calls per minute/day.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>A Grafana "Rate Limiting" dashboard is provided with RHOAM Customers can use this dashboard to determine where their usage stands with respect to the limits of their chosen subscription.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="access-grafana-monit"><a class="anchor" href="#access-grafana-monit"></a>1. Accessing the Grafana Monitoring Instance</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to the OpenShift Dedicated console and login.</p>
+</li>
+<li>
+<p>Click the <strong>Application Launcher</strong> icon in the OpenShift Dedicated console. This the square icon in the top-right.</p>
+</li>
+<li>
+<p>Select <strong>API Management Dashboards</strong> from the <strong>Application Launcher</strong> menu.</p>
+</li>
+<li>
+<p>A new browser tab will open and prompt you to login using OpenShift OAuth. Click the <strong>Log in with OpenShift</strong> button.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab3/lab3-auth.png" alt="OpenShift OAuth">
+</div>
+</div>
+</li>
+<li>
+<p>Authenticate using your configured IdP.</p>
+</li>
+<li>
+<p>Authorize the account permissions request by choosing <strong>Allow selected permissions</strong>.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab3/lab3-auth-permissions.png" alt="OpenShift OAuth Permissions">
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The Grafana Monitoring instance is only accessible by users that have been assigned the <a href="https://docs.openshift.com/dedicated/4/administering_a_cluster/dedicated-admin-role.html" target="_blank" rel="noopener"><strong>dedicated-admin</strong></a> role on the OpenShift Dedicated cluster.</p>
+</div>
+<div class="paragraph">
+<p>Reach out to your lab administrator to request this level of access if you cannot access the dashboard. If you&#8217;re the owner of the cluster in Red Hat OpenShift Cluster Manager you can personally upgrade your account to a dedicated-admin.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You should be redirected to a Grafana instance homepage after successfully authenticating and authorizing account access.</p>
+</div>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab3/lab3-grafana-home.png" alt="Grafana Homepage">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="view-grafana-monit"><a class="anchor" href="#view-grafana-monit"></a>2. Viewing the Grafana Monitoring Dashboard</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that you&#8217;re able to view the RHOAM Rate Limiting Grafana instance, let&#8217;s go ahead and get familiar with it.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to the <strong>API Management Dashboards</strong> (Grafana) using the steps from the previous section.</p>
+</li>
+<li>
+<p>Login if prompted to do so.</p>
+</li>
+<li>
+<p>Click the <strong>Search</strong> icon on the left.</p>
+</li>
+<li>
+<p>Expand the <code>redhat-rhoam-customer-monitoring-operator</code> folder by clicking on it.</p>
+</li>
+<li>
+<p>A <strong>Rate Limiting</strong> entry should be listed similar to the screenshot below.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab3/lab3-finding-dashboards.png" alt="Grafana Dashboards Dropdown">
+</div>
+</div>
+</li>
+<li>
+<p>Select <strong>Rate Limiting</strong> the <strong>Dashboards</strong> screen.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>At this point you should be viewing the <strong>RHOAM API Rate Limiting</strong> Grafana dashboard.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="dashboard-overview"><a class="anchor" href="#dashboard-overview"></a>3. Dashboard Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <strong>RHOAM API Rate Limiting</strong> dashboard has useful information that includes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Tiles for the number of accepted/rejected requests received in the past:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Minute.</p>
+</li>
+<li>
+<p>24 hours.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Tiles for the percentage of requests that were accepted/rejected in the past:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Minute</p>
+</li>
+<li>
+<p>24 hours.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>A graph showing historical data of <strong>Per Minute API Requests</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>A rejected request is defined as a request that was attempted by a client, but rejected by Red Hat OpenShift API Management with a <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429" target="_blank" rel="noopener">HTTP 429</a> due to the active subscription&#8217;s rate limit being exceeded.</p>
+</div>
+<div class="paragraph">
+<p>The following image shows a cluster that has minimal API activity - just 363 HTTP requests were processed by 3scale API Management in the past 24 hours.
+No requests are counted as rejected since 363 requests in a 24 hour window is nowhere close to the limits of any available subscription limit.</p>
+</div>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab3/lab3-grafana-dashboard.png" alt="Grafana Dashboards Dropdown">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="per-min-api-graph"><a class="anchor" href="#per-min-api-graph"></a>4. Per Minute API Requests Graph</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <strong>Per Minute API Requests Graph</strong> does exactly what the name implies. It displays historical data for the number of requests processed by 3scale API Management in a given minute.</p>
+</div>
+<div class="paragraph">
+<p>In the top-right you can filter the time range that is displayed for the <strong>Per Minute API Requests</strong> graph.
+Data points for the <strong>No. of Requests</strong>, represented by the green line, is the number of requests processed in a given minute.</p>
+</div>
+<div class="paragraph">
+<p>The following image displays an example of viewing data for a <strong>Last 1 hour</strong>. Notice how the graph displays small peaks of traffic followed by periods of inactivity.</p>
+</div>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab3/lab3-grafana-bursty.png" alt="Grafana Burst Traffic">
+</div>
+</div>
+<div class="paragraph">
+<p>The graph includes a few other useful lines that are in fixed positions. These lines represent important thresholds that you can use to gauge your API activity, and how close it is to exceeding subscription limits. For example, a sustained rate of ~3K requests per minute will approach the limits of 50M requests per day subscription. The same applies for 7K per minute and a 10M requests per day subscription, etc.</p>
+</div>
+<div class="sect2">
+<h3 id="filter-per-min-api-graph"><a class="anchor" href="#filter-per-min-api-graph"></a>4.1. Filtered Per Minute API Requests Graph</h3>
+<div class="paragraph">
+<p>If you&#8217;d like to view <strong>only</strong> the requests per minute you can click the <strong>No. of Requests</strong> in the legend below the graph. The graph should change display mode similar to the example in the screenshot below.</p>
+</div>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab3/lab3-grafana-req-only.png" alt="Grafana Burst Traffic">
+</div>
+</div>
+<div class="paragraph">
+<p>This is useful to view requests per minute in isolation, since the fixed position metrics can skew the scaling.</p>
+</div>
+<div class="paragraph">
+<p>Run the following command to send requests to your Quarkus API, with a one second delay between each, and monitor the results in Grafana. Leave the script running for a few minutes then stop it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre># Replace this URL with your own from Lab 2
+export STAGING_API_URL="https://$PROJECT_NAME_$PROJECT_NAME-rhoam-openapi-3scale-apicast-staging.apps.$CLUSTER_NAME.openshiftapps.com:443/fruits?user_key=$API_KEY"
+
+
+while sleep 0.65; do curl "$STAGING_API_URL" &amp;&amp; echo " - $(date)"; done</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After running this command you should have generated a graph that is similar to the one shown in the image below. This image shows a steady rate of 60 requests per minute, but your graph might show some variability.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Don&#8217;t forget that if you&#8217;re sharing a lab environment other lab users requests be reflected in this graph.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab3/lab3-grafana-steady-traffic.png" alt="Grafana Steady Traffic">
+</div>
+</div>
+<div class="paragraph">
+<p>Once you stop the script the graph should level out, or drop slightly similar to the following image.</p>
+</div>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab3/lab3-grafana-steady-traffic-after.png" alt="Grafana Steady Traffic After">
+</div>
+</div>
+<div class="paragraph">
+<p>Now you know how to access and view the Rate Limiting Grafana Dashboard that&#8217;s included with Red Hat OpenShift API Management.</p>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="02-service-discover.html">2. Using Red Hat OpenShift API Management &amp; Service Discovery</a></span>
+  <span class="next"><a href="04-secure-with-openid.html">4. Securing APIs with OpenID Connect and Single Sign-On on Red Hat OpenShift API Management</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../../_/js/vendor/clipboard.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

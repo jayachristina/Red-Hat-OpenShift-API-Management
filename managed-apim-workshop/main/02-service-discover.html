@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Using Red Hat OpenShift API Management &amp; Service Discovery :: Red Hat OpenShift API Management</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/managed-apim-workshop/managed-apim-workshop/main/02-service-discover.html">
+    <link rel="prev" href="01-getting-started.html">
+    <link rel="next" href="03-rate-limit-monitoring.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="../../_/img/NewRHDFullLogo_4-color_white-wordmark.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="https://redhat-scholars.github.io/managed-apim-workshop">Red Hat OpenShift API Management</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://developers.redhat.com/ebooks/" target="_blank">Books</a>
+        <a class="navbar-item" href="https://developers.redhat.com/cheatsheets/" target="_blank">Cheat Sheets</a>
+        <a class="navbar-item" href="https://developers.redhat.com/events/" target="_blank">Upcoming Events</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/kubernetes-tutorial/" target="_blank">Kubernetes</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/istio-tutorial/" target="_blank">Istio</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/quarkus-tutorial/" target="_blank">Quarkus</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/knative-tutorial/" target="_blank">Knative</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/tekton-tutorial/" target="_blank">Tekton</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="managed-apim-workshop" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html"></a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-getting-started.html">1. Red Hat OpenShift API Management An Introduction</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#installrhoam">Installing RHOAM Add-on</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#accessenv">Accessing your Environment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#access3scale">Accessing Red Hat 3scale API Management and Red Hat Single Sign-On</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#createdeployproject">Create and Deploy a Project on OpenShift Dedicated</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#testquarkusapp">Test the Quarkus Application and Deploy to OpenShift Dedicated</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-service-discover.html">2. Using Red Hat OpenShift API Management &amp; Service Discovery</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#preparequarkus">Prepare your Quarkus API for Service Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#importquarkusapi">Import your Quarkus API using Service Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#createapplicationplan">Create an Application Plan in 3scale API Management</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#configdevaccount">Configure a Developer Account to use the Application</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#testapi">Test the API</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-rate-limit-monitoring.html">3.Red Hat OpenShift API Management Rate Limit Monitoring</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-rate-limit-monitoring.html#access-grafana-monit">Accessing the Grafana Monitoring Instance</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-rate-limit-monitoring.html#view-grafana-monit">Viewing the Grafana Monitoring Dashboard</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-rate-limit-monitoring.html#dashboard-overview">Dashboard Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-rate-limit-monitoring.html#per-min-api-graph">Per Minute API Requests Graph</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-rate-limit-monitoring.html#filter-per-min-api-graph">Filtered Per Minute API Requests Graph</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-secure-with-openid.html">4. Securing APIs with OpenID Connect and Single Sign-On on Red Hat OpenShift API Management</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#create-a-realm">Create a Realm on Single Sign-On</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#createkafkatopic">3scale and Single Sign-On Integration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#toolsimage">Create API in 3scale API Management and Configure to Use OpenID Connect</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Create Application</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Verify Application Client in Red Hat SSO</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Test the OIDC Secured API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Promote to Staging and Production APIcast</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Test the API with Authorization Code flow.</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="05-3scale-toolbox.html">5. Use 3Scale toolbox with Red Hat OpenShift API Management</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Installation and Usage of 3Scale toolbox</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Create API resources with 3Scale toolbox</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Manage remote access credentials</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Import OpenAPI Spec</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Create an Application Plan</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Create an Application</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="06-cluster-monitoring.html">6. Red Hat OpenShift API Management 3scale and OpenShift Dedicated Cluster Monitoring</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="06-cluster-monitoring.html#deployquarkusapplication">Accessing the Middleware Monitoring Stack</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="06-cluster-monitoring.html#deployquarkusapplication">Accessing the Grafana Dashboards</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="06-cluster-monitoring.html#deployquarkusapplication">Viewing Managed Service Resource Usage</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="06-cluster-monitoring.html#deployquarkusapplication">Viewing Managed Service Resource Usage as a Fraction of Cluster Totals</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Red Hat OpenShift API Management Workshop</a></li>
+    <li><a href="02-service-discover.html">2. Using Red Hat OpenShift API Management &amp; Service Discovery</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jayachristina/red-hat-openshift-apim/edit/main/documentation/modules/ROOT/pages/02-service-discover.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Using Red Hat OpenShift API Management &amp; Service Discovery</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>Note: You must complete the <strong>Red Hat OpenShift API Management Introduction</strong> lab prior to starting this one.</em></p>
+</div>
+<div class="paragraph">
+<p>During the previous lab you learned how to access the Red Hat OpenShift Dedicated, and the Red Hat 3scale API Management and Red Hat {sso-name} consoles that are provided by the RHOAM addon. You also deployed a Quarkus application into your own project on the cluster.</p>
+</div>
+<div class="paragraph">
+<p>In this lab you&#8217;ll learn to manage your Quarkus API using 3scale API Management. Since the Quarkus API is running in the same cluster as 3scale API Management you can use the <strong>Service Discovery</strong> feature to import your Quarkus API into 3scale API Management.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="preparequarkus"><a class="anchor" href="#preparequarkus"></a>1. Prepare your Quarkus API for Service Discovery</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A set of <strong>labels</strong> and <strong>annotations</strong> must be applied to your Quarkus API before 3scale API Management will be able to find it via <strong>Service Discovery</strong>.</p>
+</div>
+<div class="paragraph">
+<p>To apply the necessary annotations:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to the OpenShift Dedicated Console and login.</p>
+</li>
+<li>
+<p>Click your name in the top-right, then click <strong>Copy Login Command</strong>.</p>
+</li>
+<li>
+<p>Login using your IdP if prompted, and click <strong>Display Token</strong>.</p>
+</li>
+<li>
+<p>Copy the <code>oc login</code> command and paste it into a terminal in your local development environment.</p>
+</li>
+<li>
+<p>Enter the following commands to apply the annotations.</p>
+<div class="listingblock">
+<div class="content">
+<pre>oc project $PROJECT_NAME
+oc annotate svc/rhoam-openapi "discovery.3scale.net/description-path=/openapi?format=json"
+oc annotate svc/rhoam-openapi discovery.3scale.net/port="8080"
+oc annotate svc/rhoam-openapi discovery.3scale.net/scheme=http</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add the discovery label using the following command.</p>
+<div class="listingblock">
+<div class="content">
+<pre>oc label svc/rhoam-openapi discovery.3scale.net="true"</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Verify the annotations and labels by viewing the service YAML.</p>
+<div class="listingblock">
+<div class="content">
+<pre>oc get svc/rhoam-openapi -o yaml</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The YAML output will be similar to the example shown if the labels and annotations have been applied.</p>
+</div>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab2/lab2-svc-yaml.png" alt="Quarkus Service YAML">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="importquarkusapi"><a class="anchor" href="#importquarkusapi"></a>2. Import your Quarkus API using Service Discovery</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>After 3scale API Management users are assigned a restrictive read-only role by default. This means they cannot create, update, or delete API resources in 3scale API Management.</p>
+</div>
+<div class="paragraph">
+<p>OpenShift Dedicated users with the <a href="https://docs.openshift.com/dedicated/4/administering_a_cluster/dedicated-admin-role.html" target="_blank" rel="noopener"><strong>dedicated-admin</strong></a> role are provided with 3scale API Management admin permissions by default.</p>
+</div>
+<div class="paragraph">
+<p>Reach out to your lab administrator to request increased access to the 3scale API Management instance if necessary. If you&#8217;re the owner of the cluster in Red Hat OpenShift Cluster Manager you can personally upgrade your account to a dedicated-admin.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Log in to 3scale API Management using your configured IdP, and click the New Product link on the dashboard.
+Perform the following steps on the New Product screen:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Select Import from OpenShift (authenticate if necessary).</p>
+</li>
+<li>
+<p>Choose the namespace that contains your Quarkus API from the namespace dropdown.</p>
+</li>
+<li>
+<p>Choose the <code>rhoam-openapi</code> service from the Name dropdown.</p>
+</li>
+<li>
+<p>Click the <strong>Create Product</strong> button.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The <strong>New Product</strong> screen will resemble the following screenshot prior to clicking <strong>Create Product</strong>.</p>
+</div>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab2/lab2-import.png" alt="3scale Active Docs">
+</div>
+</div>
+<div class="paragraph">
+<p>At this point, you should be redirected back to the 3scale API Management dashboard.
+If your new API isn’t listed in the APIs section after a few moments, try refreshing the page.
+Once the API has been imported and listed on the dashboard expand it and click the ActiveDoc link. Select <code>rhoam-openapi</code> on the subsequent screen to view the live documentation that was generated from the OpenAPI specification.</p>
+</div>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab2/lab2-active-doc.png" alt="3scale Active Docs">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="createapplicationplan"><a class="anchor" href="#createapplicationplan"></a>3. Create an Application Plan in 3scale API Management</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Next, you’ll need to configure an Application Plan to interact with the API via a protected route:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Choose Product: <code>rhoam-openapi</code> from the top navigation bar.</p>
+</li>
+<li>
+<p>Select Applications &gt; Application Plans from the menu on the left.</p>
+</li>
+<li>
+<p>Click the Create Application Plan link.</p>
+</li>
+<li>
+<p>Enter <code>$PROJECT_NAME Test Plan</code> in the Name field, e.g <code>es-lab Test Plan</code>.</p>
+</li>
+<li>
+<p>Enter <code>$PROJECT_NAME-test-plan</code> in the System name field, e.g <code>es-lab-test-plan</code>.</p>
+</li>
+<li>
+<p>Click the Create Application Plan button.</p>
+</li>
+<li>
+<p>Click the Publish link when redirected to the Application Plans screen.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The figure below shows the dialog to create a new application plan in 3scale API Management.</p>
+</div>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab2/lab2-created-plan.png" alt="3scale Application Plan">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configdevaccount"><a class="anchor" href="#configdevaccount"></a>4. Configure a Developer Account to use the Application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that you’ve created an Application Plan, you’ll need to sign up a developer account to use the application. Typically, an API consumer signs up using your API Developer portal. For the purpose of this lab, you will manually provide the default Developer account with API access:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Select <strong>Audience</strong> from the top navigation bar.</p>
+</li>
+<li>
+<p>Select the <strong>Developer</strong> account from the Accounts list.</p>
+</li>
+<li>
+<p>Click the <strong>(number) Applications</strong> link from the breadcrumb links at the top of the screen.</p>
+</li>
+<li>
+<p>Click the <strong>Create Application</strong> link and you’ll be directed to the <strong>New Application</strong> screen.</p>
+</li>
+<li>
+<p>Select <code>$PROJECT_NAME Test Plan</code> as the Application Plan.</p>
+</li>
+<li>
+<p>Enter <code>$PROJECT_NAME Test Application</code> in the Name field.</p>
+</li>
+<li>
+<p>Enter a description of the API.</p>
+</li>
+<li>
+<p>Click Create Application.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Once the application is created, you’ll see that an API key is listed under the API Credentials section, as shown in the image below. Take note of the key.</p>
+</div>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab2/lab2-created-application.png" alt="3scale Application">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="testapi"><a class="anchor" href="#testapi"></a>5. Test the API</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>At this point you can start making requests to your API via a HTTP client.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate back to the rhoam-openapi API Overview</p>
+</li>
+<li>
+<p>Open the Integration &gt; Configuration section and scroll down to the Staging APIcast section.</p>
+</li>
+<li>
+<p>Copy the cURL command and add /fruits to the URL, e.g <a href="https://rhoam-openapi-api-3scale-staging.$CLUSTER_HOSTNAME:443/fruits?user_key=$YOUR_API_KEY" class="bare">https://rhoam-openapi-api-3scale-staging.$CLUSTER_HOSTNAME:443/fruits?user_key=$YOUR_API_KEY</a></p>
+</li>
+<li>
+<p>Issue the command a few times, or paste the URL into a web browser. You should to receive a fruits response.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab2/lab2-api-response.png" alt="3scale Application">
+</div>
+</div>
+<div class="paragraph">
+<p>Congratulations, you&#8217;ve gotten your Quarkus API pushed into a Staging API Management environment!</p>
+</div>
+<div class="paragraph">
+<p>You&#8217;re ready to move onto Lab 3.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="01-getting-started.html">1. Red Hat OpenShift API Management An Introduction</a></span>
+  <span class="next"><a href="03-rate-limit-monitoring.html">3.Red Hat OpenShift API Management Rate Limit Monitoring</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../../_/js/vendor/clipboard.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

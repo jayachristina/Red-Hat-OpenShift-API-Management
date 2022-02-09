@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Securing APIs with OpenID Connect and Red Hat Single Sign-On} on Red Hat OpenShift API Management :: Red Hat OpenShift API Management</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/managed-apim-workshop/managed-apim-workshop/main/04-secure-with-openid.html">
+    <link rel="prev" href="03-rate-limit-monitoring.html">
+    <link rel="next" href="05-3scale-toolbox.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="../../_/img/NewRHDFullLogo_4-color_white-wordmark.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="https://redhat-scholars.github.io/managed-apim-workshop">Red Hat OpenShift API Management</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://developers.redhat.com/ebooks/" target="_blank">Books</a>
+        <a class="navbar-item" href="https://developers.redhat.com/cheatsheets/" target="_blank">Cheat Sheets</a>
+        <a class="navbar-item" href="https://developers.redhat.com/events/" target="_blank">Upcoming Events</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/kubernetes-tutorial/" target="_blank">Kubernetes</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/istio-tutorial/" target="_blank">Istio</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/quarkus-tutorial/" target="_blank">Quarkus</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/knative-tutorial/" target="_blank">Knative</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/tekton-tutorial/" target="_blank">Tekton</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="managed-apim-workshop" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html"></a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-getting-started.html">1. Red Hat OpenShift API Management An Introduction</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#installrhoam">Installing RHOAM Add-on</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#accessenv">Accessing your Environment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#access3scale">Accessing Red Hat 3scale API Management and Red Hat Single Sign-On</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#createdeployproject">Create and Deploy a Project on OpenShift Dedicated</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#testquarkusapp">Test the Quarkus Application and Deploy to OpenShift Dedicated</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-service-discover.html">2. Using Red Hat OpenShift API Management &amp; Service Discovery</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#preparequarkus">Prepare your Quarkus API for Service Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#importquarkusapi">Import your Quarkus API using Service Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#createapplicationplan">Create an Application Plan in 3scale API Management</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#configdevaccount">Configure a Developer Account to use the Application</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#testapi">Test the API</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-rate-limit-monitoring.html">3.Red Hat OpenShift API Management Rate Limit Monitoring</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-rate-limit-monitoring.html#access-grafana-monit">Accessing the Grafana Monitoring Instance</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-rate-limit-monitoring.html#view-grafana-monit">Viewing the Grafana Monitoring Dashboard</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-rate-limit-monitoring.html#dashboard-overview">Dashboard Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-rate-limit-monitoring.html#per-min-api-graph">Per Minute API Requests Graph</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-rate-limit-monitoring.html#filter-per-min-api-graph">Filtered Per Minute API Requests Graph</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-secure-with-openid.html">4. Securing APIs with OpenID Connect and Single Sign-On on Red Hat OpenShift API Management</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#create-a-realm">Create a Realm on Single Sign-On</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#createkafkatopic">3scale and Single Sign-On Integration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#toolsimage">Create API in 3scale API Management and Configure to Use OpenID Connect</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#bindquarkusapp">Create Application</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#bindquarkusapp">Verify Application Client in Red Hat SSO</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#bindquarkusapp">Test the OIDC Secured API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#bindquarkusapp">Promote to Staging and Production APIcast</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#bindquarkusapp">Test the API with Authorization Code flow.</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="05-3scale-toolbox.html">5. Use 3Scale toolbox with Red Hat OpenShift API Management</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Installation and Usage of 3Scale toolbox</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Create API resources with 3Scale toolbox</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Manage remote access credentials</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Import OpenAPI Spec</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Create an Application Plan</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Create an Application</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="06-cluster-monitoring.html">6. Red Hat OpenShift API Management 3scale and OpenShift Dedicated Cluster Monitoring</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="06-cluster-monitoring.html#deployquarkusapplication">Accessing the Middleware Monitoring Stack</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="06-cluster-monitoring.html#deployquarkusapplication">Accessing the Grafana Dashboards</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="06-cluster-monitoring.html#deployquarkusapplication">Viewing Managed Service Resource Usage</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="06-cluster-monitoring.html#deployquarkusapplication">Viewing Managed Service Resource Usage as a Fraction of Cluster Totals</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Red Hat OpenShift API Management Workshop</a></li>
+    <li><a href="04-secure-with-openid.html">4. Securing APIs with OpenID Connect and Single Sign-On on Red Hat OpenShift API Management</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jayachristina/red-hat-openshift-apim/edit/main/documentation/modules/ROOT/pages/04-secure-with-openid.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Securing APIs with OpenID Connect and Red Hat Single Sign-On} on Red Hat OpenShift API Management</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this lab you will learn how to secure an API managed with 3scale API Management using OpenID Connect (OIDC), using the Red Hat Single Sign-On instance of Red Hat OpenShift API Management as identity provider.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="create-a-realm"><a class="anchor" href="#create-a-realm"></a>1. Create a Realm on Red Hat Single Sign-On</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Access the RH-SSO console through the <strong>Application Launcher</strong> in the OpenShift Dedicated console. This the square icon in the top-right.</p>
+</li>
+<li>
+<p>Select <strong>API Management SSO</strong> to access the Red Hat Single Sign-On console.</p>
+</li>
+<li>
+<p>Log in to the RH-SSO administration console. Login using your IdP.</p>
+</li>
+<li>
+<p>You are redirected to the overview page of the <em>Master</em> realm.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab4/lab4-sso-console.png" alt="SSO Console">
+</div>
+</div>
+</li>
+<li>
+<p>To create a new realm, hover over the realm drop-down in the menu and click the <strong>Add realm</strong> button.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab4/lab4-sso-add-realm.png" alt="SSO Add Realm">
+</div>
+</div>
+</li>
+<li>
+<p>Give a name to your realm, for example <code>3scale-realm</code>.</p>
+</li>
+<li>
+<p>Click the <strong>Create</strong> button to create the realm.</p>
+</li>
+<li>
+<p>You are redirected to the overview screen of your new realm.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab4/lab4-sso-3scale-realm.png" alt="SSO 3scale Realm">
+</div>
+</div>
+</li>
+<li>
+<p>The next step is to create a user for the realm. In the realm menu, select <strong>Users</strong>.</p>
+</li>
+<li>
+<p>On the users overview page, click the <strong>Add user</strong> button on the right to create a new user.</p>
+</li>
+<li>
+<p>Fill in the form. Click <strong>Save</strong> to create the user.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab4/lab4-sso-add-user.png" alt="SSO Add User">
+</div>
+</div>
+</li>
+<li>
+<p>Open the <strong>Credentials</strong> tab and set a password for the new user. Make sure <strong>Temporary</strong> is set to <code>OFF</code>. Click <strong>Set Password</strong> to save the password.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab4/lab4-sso-user-set-password.png" alt="SSO User Set Password">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_3scale_and_red_hat_single_sign_on_integration"><a class="anchor" href="#_3scale_and_red_hat_single_sign_on_integration"></a>2. 3scale and Red Hat Single Sign-On Integration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Every OIDC secured <em>application</em> in 3scale needs a corresponding SSO client in the RH-SSO realm.
+The details between the API managed <em>application</em> should match the details of the corresponding SSO <em>client</em>.</p>
+</div>
+<div class="paragraph">
+<p>Subsequently, it is important to automate the synchronization between 3scale and RH-SSO.</p>
+</div>
+<div class="paragraph">
+<p>The <em>zync</em> component in 3scale is the component responsible for this synchronization.
+Its purpose is to synchronize API managed <em>applications</em> to external systems such as RH-SSO.
+It does so in an automated manner by pushing updates to external systems every time a state change occurs within an API managed <em>application</em>.</p>
+</div>
+<div class="paragraph">
+<p>In this section, you create a SSO client in the realm of your RH-SSO server that will be leveraged by the <em>zync</em> component of the 3scale API management platform.
+Zync will use the new SSO client to synchronize between OIDC secured <em>applications</em> and their corresponding SSO <em>clients</em> in RH-SSO.</p>
+</div>
+<div class="paragraph">
+<p>The name of this new SSO client will be called:  <em>zync-sso</em>.
+The <em>zync-sso</em> client will be configured to utilize the OIDC <em>client credentials</em> flow.
+Via the <em>zync-sso</em> client, the zync component will retrieve an access token that then allows for the creation and update of new SSO clients through the RH-SSO API.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Within OIDC and OAuth, the Client Credentials Flow is used for server-to-server scenarios. In this scenario, the client application (in our case the 3scale zync component) is a confidential client that’s acting on its own, not on behalf of the user. It’s more of a service account type of scenario. It’s a back channel flow to obtain an access token using the client’s credentials.
+A good explanation of the different OIDC flows can be found here: <a href="https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth" class="bare">https://developer.okta.com/blog/2017/06/21/what-the-heck-is-oauth</a></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Create <em>zync_sso</em> client</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the RH-SSO console, make sure you are on the page of the realm you created in the previous step.</p>
+</li>
+<li>
+<p>Click <strong>Clients</strong> to open the realm clients overview page,</p>
+</li>
+<li>
+<p>Click <strong>Create</strong> to create a new realm client.</p>
+</li>
+<li>
+<p>In the <em>Add Client</em> page, enter the following values:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Client ID</strong>: <code>zync-sso</code></p>
+</li>
+<li>
+<p><strong>Client Protocol</strong>: <code>openid-connect</code></p>
+</li>
+<li>
+<p><strong>Root URL</strong>: leave blank</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click <strong>Save</strong> to create the realm client.</p>
+</li>
+<li>
+<p>You are redirected to the client <em>Settings</em> page.</p>
+</li>
+<li>
+<p>Make the following changes to the client settings:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Set <strong>Access Type</strong> to <code>confidential</code>.</p>
+</li>
+<li>
+<p>Set <strong>Standard Flow Enabled</strong> to <code>OFF</code>.</p>
+</li>
+<li>
+<p>Set <strong>Direct Access Grants Enabled</strong> to <code>OFF</code>.</p>
+</li>
+<li>
+<p>Set <strong>Service Accounts Enabled</strong> to <code>ON</code>.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab4/lab4-sso-client-settings-client-credentials.png" alt="SSO Realm Client Settings For Client Credentials">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Scroll down and click <strong>Save</strong> to save the client configuration.</p>
+</li>
+<li>
+<p>Navigate to the <strong>Service Account Roles</strong> tab of the client settings.</p>
+</li>
+<li>
+<p>In the <strong>Client Roles</strong> dropdown, type <code>realm-management</code>.</p>
+</li>
+<li>
+<p>Ensure that the <code>manage-clients</code> role is listed as one of the <strong>Assigned Roles</strong>.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab4/lab4-sso-client-service-account-roles.png" alt="SSO Realm Client Service Account Roles">
+</div>
+</div>
+</li>
+<li>
+<p>Take note of the <em>Client ID</em> - which is <code>zync-sso</code> unless you changed the value.</p>
+</li>
+<li>
+<p>Take note of the <em>Client Secret</em>. You can find the value of the Client Secret on the <strong>Credentials</strong> page of the client.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab4/lab4-sso-realm-client-credentials.png" alt="SSO Realm Client Credentials">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_api_in_3scale_api_management_and_configure_to_use_openid_connect"><a class="anchor" href="#_create_api_in_3scale_api_management_and_configure_to_use_openid_connect"></a>3. Create API in 3scale API Management and Configure to Use OpenID Connect</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this section of the lab you configure an API on 3scale secured with OpenID Connect.</p>
+</div>
+<div class="paragraph">
+<p>The backend for this new API is the Quarkus application which you leveraged in previous labs as well.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Log in to 3scale API Management using your configured IdP.</p>
+</li>
+<li>
+<p>Navigate to <strong>Dashboard</strong>, select the <strong>Products</strong> tab and click <strong>New Product</strong>.</p>
+</li>
+<li>
+<p>On the <em>New Product</em> page:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Select <strong>Define manually</strong></p>
+</li>
+<li>
+<p><strong>Name</strong>: <code>RHOAM API OIDC</code></p>
+</li>
+<li>
+<p><strong>System Name</strong>: <code>rhoam_api_oidc</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Select <strong>Create Product</strong> to create the API.</p>
+</li>
+<li>
+<p>Create an application plan for the new API:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Name</strong>: <code>RHOAM OIDC Basic Plan</code></p>
+</li>
+<li>
+<p><strong>System Name</strong>: <code>rhoam_oidc/basic</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Publish the application plan.</p>
+</li>
+<li>
+<p>Add a backend to the API. Click on the <strong>Integration &#8594; Backends</strong> link in the menu. On the backend page, click <strong>Add Backend</strong>. Select the <code>rhoam-openapi Backend</code> backend, and set the path to <code>/</code>. Click <strong>Add to Product</strong> to add the backend to the API.</p>
+</li>
+<li>
+<p>The default mapping rules allow all <code>GET</code> operations, which is sufficient for this lab.</p>
+</li>
+<li>
+<p>On the <strong>Settings</strong> page of the API:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Select <code>APIcast 3scale managed</code>.</p>
+</li>
+<li>
+<p>Leave the <strong>Staging Public Base URL</strong> and <strong>Production Public Base URL</strong> to the default values.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>In the <strong>Authentication</strong> section, select <code>OpenID Connect</code>.</p>
+</li>
+<li>
+<p>Scroll down and fill in the details for the authentication settings:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>OpenID Connect Issuer Type</strong>: <code>Red Hat Single Sign-On</code></p>
+</li>
+<li>
+<p>Set the value of <strong>OpenID Connect Issuer</strong> to the URL of your realm on RH-SSO, to which you add the <em>zync_sso</em> client ID and secret for authentication.<br></p>
+<div class="listingblock">
+<div class="content">
+<pre>https://&lt;ZYNC_SSO_CLIENT_ID&gt;:&lt;ZYNC_SSO_CLIENT_SECRET&gt;@&lt;RHSSO_HOSTNAME&gt;/auth/realms/&lt;SSO_REALM&gt;</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>&lt;ZYNC_SSO_CLIENT_ID&gt;</code>: client ID of the SSO client you created in the previous section.</p>
+</li>
+<li>
+<p><code>&lt;ZYNC_SSO_CLIENT_SECRET&gt;</code>: client secret of the SSO client you created in the previous section.</p>
+</li>
+<li>
+<p><code>&lt;RHSSO_HOSTNAME&gt;</code>: Host name of the RH-SSO server. Something like <code>keycloak-redhat-rhoam-user-sso.apps.&lt;OPENSHIFT_BASE_URL&gt;</code>.</p>
+</li>
+<li>
+<p><code>&lt;SSO_REALM&gt;</code>: name of the realm you created previously.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This URL serves the following purposes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Provides zync with the URL to add or update SSO clients in RH-SSO.</p>
+</li>
+<li>
+<p>Provides APIcast with the URL to RH-SSO to retrieve the public key of the RH-SSO realm in order to verify the JWT token.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>In the <strong>OIDC AUTHORIZATION FLOW</strong> section, ensure that the <code>Authorization Code Flow</code> checkbox is checked.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab4/lab4-3scale-api-oidc-settings.png" alt="3scale API OIDC Settings">
+</div>
+</div>
+</li>
+<li>
+<p>Scroll down and change <strong>Credentials Location</strong> to <em>As HTTP Headers</em>.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab4/lab4-3scale-api-credentials-location.png" alt="3scale API Credentials Location">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click <strong>Update Product</strong> to update the settings.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_application"><a class="anchor" href="#_create_application"></a>4. Create Application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this section of the lab you create an application for the <em>RHOAM API OIDC</em> API.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Log in to 3scale API Management using your configured IdP.</p>
+</li>
+<li>
+<p>Navigate to <strong>Audience &#8594; Accounts &#8594; Listing</strong>, and click <strong>Create</strong> to create a new account.</p>
+</li>
+<li>
+<p>On the <em>Create New Account Page</em>, enter the following values:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Username</strong>: <code>test-oidc</code></p>
+</li>
+<li>
+<p><strong>Email</strong>: a valid email address</p>
+</li>
+<li>
+<p><strong>Password</strong>: an easy to remember password</p>
+</li>
+<li>
+<p><strong>Organization/Group Name</strong>: <code>TestOIDC</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click <strong>Create</strong> to create the user and account.</p>
+</li>
+<li>
+<p>Create a new <em>Application</em> for the TestOIDC account.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Application Plan</strong>: <code>RHOAM OIDC Basic Plan</code></p>
+</li>
+<li>
+<p><strong>Name</strong>: <code>TestOIDC RHOAM App</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>On the overview page for the application, click <strong>Edit</strong> in the <em>API Credentials</em> section.</p>
+</li>
+<li>
+<p>Set the redirect URL to <code><a href="https://www.getpostman.com/oauth2/callback" class="bare">https://www.getpostman.com/oauth2/callback</a></code>.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab4/lab4-3scale-api-oidc-callback-url.png" alt="3scale API OIDC callback">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>This redirect URL will become useful later in this lab when you test using the <em>Authorization Code</em> OAuth2 flow.</p>
+</li>
+<li>
+<p>Notice that the API Credentials for this application do no consist of a user key, but rather a Client ID and a Client Secret.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_verify_application_client_in_rh_sso"><a class="anchor" href="#_verify_application_client_in_rh_sso"></a>5. Verify Application Client in RH-SSO</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As a result of creating the application, the 3scale zync component has created a new realm client for your realm in the RH-SSO server.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Log in to RH-SSO, select the 3scale realm and navigate to the <strong>Clients</strong> section.</p>
+</li>
+<li>
+<p>Notice that a new client has been created with a client ID corresponding to the client ID of the <em>TestOIDC RHOAM App</em> application in 3scale.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab4/lab4-sso-zync-client-created.png" alt="RH-SSO Client created by Zync">
+</div>
+</div>
+</li>
+<li>
+<p>Click the <strong>Edit</strong> button for the new client.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The client name corresponds to the name of the application in 3scale.</p>
+</li>
+<li>
+<p>The redirect URL matches the URL you specified in the API credentials.</p>
+</li>
+<li>
+<p><em>Standard Flow</em> is enabled, which matches the <em>Authorization Code Flow</em> setting specified in the API definition.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_test_the_oidc_secured_api"><a class="anchor" href="#_test_the_oidc_secured_api"></a>6. Test the OIDC Secured API</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_promote_to_staging_and_production_apicast"><a class="anchor" href="#_promote_to_staging_and_production_apicast"></a>6.1. Promote to Staging and Production APIcast</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the 3scale Admin Portal, navigate to <strong>Product: RHOAM API OIDC &#8594; Integration &#8594; Configuration</strong>.</p>
+</li>
+<li>
+<p>Promote the API to the staging and production APIcast.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_test_the_api_with_authorization_code_flow"><a class="anchor" href="#_test_the_api_with_authorization_code_flow"></a>6.2. Test the API with Authorization Code flow.</h3>
+<div class="paragraph">
+<p><strong>Install and Configure Postman</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Install Postman on your local workstation if you don&#8217;t have it installed yet. Navigate to <code><a href="https://www.postman.com/downloads/" class="bare">https://www.postman.com/downloads/</a></code> and download the version matching your OS. At the moment of writing the latest version is 8.2.1. Untar or unzip the downloaded archive, and add the <code>Postman</code> binary to your PATH. Verify that the installation was successful. The response of the <code>which</code> command should point to the Postman executable binary.</p>
+<div class="listingblock">
+<div class="content">
+<pre>$ which Postman</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Open the Postman application. If this is the first time you used Postman, expect to be greeted with a sign-up page. Feel free to skip this stage and go directly to the application.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab4/lab4-postman-signup-page.png" alt="Postman Signup Page">
+</div>
+</div>
+</li>
+<li>
+<p>Expect to see the landing page of the Postman application:</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab4/lab4-postman-home-page.png" alt="Postman Home Page">
+</div>
+</div>
+</li>
+<li>
+<p>Click <strong>Create a request</strong>.</p>
+</li>
+<li>
+<p>Enter the URL to the production APIcast of the <em>RHOAM API OIDC</em> application in the <strong>Enter request URL</strong> text box. Add the <code>/fruits</code> path to the URL.</p>
+<div class="paragraph">
+<p>The APIcast URL can be obtained from the <em>Configuration</em> page of the API in the 3scale API Management console.</p>
+</div>
+</li>
+<li>
+<p>Click <strong>Send</strong>.</p>
+</li>
+<li>
+<p>Expect a <code>403 Forbidden</code> return code, and a response <code>Authentication parameters missing</code>.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab4/lab4-postman-response-forbidden.png" alt="Postman Response Forbidden">
+</div>
+</div>
+</li>
+<li>
+<p>Configure Postman to obtain an access token from the RH-SSO server.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Click the <strong>Authorization</strong> tab.</p>
+</li>
+<li>
+<p>From the <strong>Type</strong> field, select <strong>OAuth 2.0</strong>.</p>
+</li>
+<li>
+<p>Enter the following values into the <strong>Configure New Token</strong> dialog box:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Token Name</strong>: <code>RHOAM API Access Token</code></p>
+</li>
+<li>
+<p><strong>Grant Type</strong>: <code>Authorization Code</code></p>
+</li>
+<li>
+<p><strong>Callback URL</strong>: <code><a href="https://www.getpostman.com/oauth2/callback" class="bare">https://www.getpostman.com/oauth2/callback</a></code></p>
+</li>
+<li>
+<p><strong>Auth URL</strong>: <code><a href="https://&lt;RHSSO_HOSTNAME&gt;/auth/realms/&lt;SSO_REALM&gt;/protocol/openid-connect/auth" class="bare">https://&lt;RHSSO_HOSTNAME&gt;/auth/realms/&lt;SSO_REALM&gt;/protocol/openid-connect/auth</a></code></p>
+</li>
+<li>
+<p><strong>Access Token URL</strong>: <code><a href="https://&lt;RHSSO_HOSTNAME&gt;/auth/realms/&lt;SSO_REALM&gt;/protocol/openid-connect/token" class="bare">https://&lt;RHSSO_HOSTNAME&gt;/auth/realms/&lt;SSO_REALM&gt;/protocol/openid-connect/token</a></code></p>
+</li>
+<li>
+<p><strong>ClientID</strong>: The value of the Client ID of the Application you created for the API.</p>
+</li>
+<li>
+<p><strong>Client Secret</strong>: The value of Client Secret of the Application you created for the API.</p>
+</li>
+<li>
+<p><strong>Scope</strong> : <code>openid</code></p>
+</li>
+<li>
+<p><strong>Client Authentication</strong> : <code>Send as Basic Auth header</code></p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab4/lab4-postman-configure-new-token.png" alt="Postman Configure New Token">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Click <strong>Get New Access Token</strong>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>A new dialog box appears that shows the login screen for your realm on the RH-SSO server.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab4/lab4-postman-request-token-login.png" alt="Postman Request Token SSO Login">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Enter the username and password of the realm user you created previously. Click <strong>Log In</strong>.</p>
+</li>
+<li>
+<p>A new pop-up appears that shows the details of the Access Token that was obtained from the RH-SSO server.</p>
+<div class="paragraph">
+<p>Click <strong>Use Token</strong></p>
+</div>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab4/lab4-postman-use-token.png" alt="Postman Use Token">
+</div>
+</div>
+</li>
+<li>
+<p>Back on the request page, click <strong>Send</strong>.<br>
+This time expect a successful response.</p>
+<div class="imageblock integr8ly-img-responsive">
+<div class="content">
+<img src="_images/lab4/lab4-postman-response-ok.png" alt="Postman Response OK">
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Congratulations, you&#8217;ve secured your API on Red Hat OpenShift API Management with Red Hat Single Sign-On and OpenID Connect!</p>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="03-rate-limit-monitoring.html">3.Red Hat OpenShift API Management Rate Limit Monitoring</a></span>
+  <span class="next"><a href="05-3scale-toolbox.html">5. Use 3Scale toolbox with Red Hat OpenShift API Management</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../../_/js/vendor/clipboard.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

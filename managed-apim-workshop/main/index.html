@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Red Hat OpenShift API Management Introduction :: Red Hat OpenShift API Management</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/managed-apim-workshop/managed-apim-workshop/main/index.html">
+    <link rel="next" href="01-getting-started.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="../../_/img/NewRHDFullLogo_4-color_white-wordmark.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="https://redhat-scholars.github.io/managed-apim-workshop">Red Hat OpenShift API Management</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://developers.redhat.com/ebooks/" target="_blank">Books</a>
+        <a class="navbar-item" href="https://developers.redhat.com/cheatsheets/" target="_blank">Cheat Sheets</a>
+        <a class="navbar-item" href="https://developers.redhat.com/events/" target="_blank">Upcoming Events</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/kubernetes-tutorial/" target="_blank">Kubernetes</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/istio-tutorial/" target="_blank">Istio</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/quarkus-tutorial/" target="_blank">Quarkus</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/knative-tutorial/" target="_blank">Knative</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/tekton-tutorial/" target="_blank">Tekton</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="managed-apim-workshop" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html"></a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-getting-started.html">1. Red Hat OpenShift API Management An Introduction</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#installrhoam">Installing RHOAM Add-on</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#accessenv">Accessing your Environment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#access3scale">Accessing Red Hat 3scale API Management and Red Hat Single Sign-On</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#createdeployproject">Create and Deploy a Project on OpenShift Dedicated</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-getting-started.html#testquarkusapp">Test the Quarkus Application and Deploy to OpenShift Dedicated</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-service-discover.html">2. Using Red Hat OpenShift API Management &amp; Service Discovery</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#preparequarkus">Prepare your Quarkus API for Service Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#importquarkusapi">Import your Quarkus API using Service Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#createapplicationplan">Create an Application Plan in 3scale API Management</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#configdevaccount">Configure a Developer Account to use the Application</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-service-discover.html#testapi">Test the API</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-rate-limit-monitoring.html">3.Red Hat OpenShift API Management Rate Limit Monitoring</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-rate-limit-monitoring.html#access-grafana-monit">Accessing the Grafana Monitoring Instance</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-rate-limit-monitoring.html#view-grafana-monit">Viewing the Grafana Monitoring Dashboard</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-rate-limit-monitoring.html#dashboard-overview">Dashboard Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-rate-limit-monitoring.html#per-min-api-graph">Per Minute API Requests Graph</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-rate-limit-monitoring.html#filter-per-min-api-graph">Filtered Per Minute API Requests Graph</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-secure-with-openid.html">4. Securing APIs with OpenID Connect and Single Sign-On on Red Hat OpenShift API Management</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#create-a-realm">Create a Realm on Single Sign-On</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#createkafkatopic">3scale and Single Sign-On Integration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#toolsimage">Create API in 3scale API Management and Configure to Use OpenID Connect</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Create Application</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Verify Application Client in Red Hat SSO</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Test the OIDC Secured API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Promote to Staging and Production APIcast</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="04-secure-with-openid.html#bindquarkusapp">Test the API with Authorization Code flow.</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="05-3scale-toolbox.html">5. Use 3Scale toolbox with Red Hat OpenShift API Management</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Installation and Usage of 3Scale toolbox</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Create API resources with 3Scale toolbox</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Manage remote access credentials</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Import OpenAPI Spec</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Create an Application Plan</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-3scale-toolbox.html#deployquarkusapplication">Create an Application</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="06-cluster-monitoring.html">6. Red Hat OpenShift API Management 3scale and OpenShift Dedicated Cluster Monitoring</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="06-cluster-monitoring.html#deployquarkusapplication">Accessing the Middleware Monitoring Stack</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="06-cluster-monitoring.html#deployquarkusapplication">Accessing the Grafana Dashboards</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="06-cluster-monitoring.html#deployquarkusapplication">Viewing Managed Service Resource Usage</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="06-cluster-monitoring.html#deployquarkusapplication">Viewing Managed Service Resource Usage as a Fraction of Cluster Totals</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link is-current"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Red Hat OpenShift API Management Workshop</a></li>
+    <li><a href="index.html">Red Hat OpenShift API Management Introduction</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/jayachristina/red-hat-openshift-apim/edit/main/documentation/modules/ROOT/pages/index.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Red Hat OpenShift API Management Introduction</h1>
+<div class="sect1 text-center strong">
+<h2>Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Welcome to the Red Hat OpenShift API Management workshop</p>
+</div>
+<div class="paragraph">
+<p>Red Hat® OpenShift® API Management (RHOAM) is a hosted and managed API management service delivered as an add-on product to Red Hat OpenShift Dedicated, a fully managed service of enterprise Kubernetes platform Red Hat OpenShift.</p>
+</div>
+<div class="paragraph">
+<p>RHOAM  supports teams that want to take an API-first approach to building microservices-based applications so they can modernize existing systems, increase developer productivity, and deliver new applications faster. OpenShift API Management also includes Red Hat OpenShift Service Registry at no extra cost.</p>
+</div>
+<div class="paragraph">
+<p>In this workshop you will:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Create and setup Red Hat OpenShift API Management</p>
+</li>
+<li>
+<p>Use 3scale Service Discovery to import APIs, create applications plans and make calls to APIs using API Key security</p>
+</li>
+<li>
+<p>Use and observe the API Management Dashboard (Grafana) for rate limiting status.</p>
+</li>
+<li>
+<p>Secure an API managed with 3scale API Management using OpenID Connect (OIDC), using the Red Hat Single Sign-On instance of RHOAM as identity provider.</p>
+</li>
+<li>
+<p>Use 3scale toolbox to help administrators operate their APIs, and help automate the delivery of these APIs through Continuous Delivery pipelines.</p>
+</li>
+<li>
+<p>Setup monitoring tools for RHOAM.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This workshop uses the <a href="https://developers.redhat.com/developer-sandbox">Developer Sandbox for Red Hat OpenShift</a>, which provides you with a private OpenShift environment in a shared, multi-tenant OpenShift cluster that is pre-configured with a set of developer tools. This also means you won&#8217;t have to install anything on your workstation in order to run this workshop.</p>
+</div>
+</div>
+</div>
+<div class="sect1 tiles browse">
+<h2>Browse modules</h2>
+<div class="sectionbody">
+<div class="ulist tile">
+<ul>
+<li>
+<p><a href="01-getting-started.html" class="xref page">1. Red Hat OpenShift API Management An Introduction</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="01-getting-started.html#installrhoam" class="xref page">Installing RHOAM Add-on</a></p>
+</li>
+<li>
+<p><a href="01-getting-started.html#accessenv" class="xref page">Accessing your Environment</a></p>
+</li>
+<li>
+<p><a href="01-getting-started.html#access3scale" class="xref page">Accessing Red Hat 3scale API Management and Red Hat Single Sign-On</a></p>
+</li>
+<li>
+<p><a href="01-getting-started.html#createdeployproject" class="xref page">Create and Deploy a Project on OpenShift Dedicated</a></p>
+</li>
+<li>
+<p><a href="01-getting-started.html#testquarkusapp" class="xref page">Test the Quarkus Application and Deploy to OpenShift Dedicated</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="02-service-discover.html" class="xref page">2. Using Red Hat OpenShift API Management &amp; Service Discovery</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="02-service-discover.html#preparequarkus" class="xref page">Prepare your Quarkus API for Service Discovery</a></p>
+</li>
+<li>
+<p><a href="02-service-discover.html#importquarkusapi" class="xref page">Import your Quarkus API using Service Discovery</a></p>
+</li>
+<li>
+<p><a href="02-service-discover.html#createapplicationplan" class="xref page">Create an Application Plan in 3scale API Management</a></p>
+</li>
+<li>
+<p><a href="02-service-discover.html#configdevaccount" class="xref page">Configure a Developer Account to use the Application</a></p>
+</li>
+<li>
+<p><a href="02-service-discover.html#testapi" class="xref page">Test the API</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="03-rate-limit-monitoring.html" class="xref page">3.Red Hat OpenShift API Management Rate Limit Monitoring</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="03-rate-limit-monitoring.html#access-grafana-monit" class="xref page">Accessing the Grafana Monitoring Instance</a></p>
+</li>
+<li>
+<p><a href="03-rate-limit-monitoring.html#view-grafana-monit" class="xref page">Viewing the Grafana Monitoring Dashboard</a></p>
+</li>
+<li>
+<p><a href="03-rate-limit-monitoring.html#dashboard-overview" class="xref page">Dashboard Overview</a></p>
+</li>
+<li>
+<p><a href="03-rate-limit-monitoring.html#per-min-api-graph" class="xref page">Per Minute API Requests Graph</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="03-rate-limit-monitoring.html#filter-per-min-api-graph" class="xref page">Filtered Per Minute API Requests Graph</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="04-secure-with-openid.html" class="xref page">4. Securing APIs with OpenID Connect and Single Sign-On on Red Hat OpenShift API Management</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="04-secure-with-openid.html#create-a-realm" class="xref page">Create a Realm on Single Sign-On</a></p>
+</li>
+<li>
+<p><a href="04-secure-with-openid.html#createkafkatopic" class="xref page">3scale and Single Sign-On Integration</a></p>
+</li>
+<li>
+<p><a href="04-secure-with-openid.html#toolsimage" class="xref page">Create API in 3scale API Management and Configure to Use OpenID Connect</a></p>
+</li>
+<li>
+<p><a href="04-secure-with-openid.html#bindquarkusapp" class="xref page">Create Application</a></p>
+</li>
+<li>
+<p><a href="04-secure-with-openid.html#bindquarkusapp" class="xref page">Verify Application Client in Red Hat SSO</a></p>
+</li>
+<li>
+<p><a href="04-secure-with-openid.html#bindquarkusapp" class="xref page">Test the OIDC Secured API</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="04-secure-with-openid.html#bindquarkusapp" class="xref page">Promote to Staging and Production APIcast</a></p>
+</li>
+<li>
+<p><a href="04-secure-with-openid.html#bindquarkusapp" class="xref page">Test the API with Authorization Code flow.</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="05-3scale-toolbox.html" class="xref page">5. Use 3Scale toolbox with Red Hat OpenShift API Management</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="05-3scale-toolbox.html#deployquarkusapplication" class="xref page">Installation and Usage of 3Scale toolbox</a></p>
+</li>
+<li>
+<p><a href="05-3scale-toolbox.html#deployquarkusapplication" class="xref page">Create API resources with 3Scale toolbox</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="05-3scale-toolbox.html#deployquarkusapplication" class="xref page">Manage remote access credentials</a></p>
+</li>
+<li>
+<p><a href="05-3scale-toolbox.html#deployquarkusapplication" class="xref page">Import OpenAPI Spec</a></p>
+</li>
+<li>
+<p><a href="05-3scale-toolbox.html#deployquarkusapplication" class="xref page">Create an Application Plan</a></p>
+</li>
+<li>
+<p><a href="05-3scale-toolbox.html#deployquarkusapplication" class="xref page">Create an Application</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="06-cluster-monitoring.html" class="xref page">6. Red Hat OpenShift API Management 3scale and OpenShift Dedicated Cluster Monitoring</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="06-cluster-monitoring.html#deployquarkusapplication" class="xref page">Accessing the Middleware Monitoring Stack</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="06-cluster-monitoring.html#deployquarkusapplication" class="xref page">Accessing the Grafana Dashboards</a></p>
+</li>
+<li>
+<p><a href="06-cluster-monitoring.html#deployquarkusapplication" class="xref page">Viewing Managed Service Resource Usage</a></p>
+</li>
+<li>
+<p><a href="06-cluster-monitoring.html#deployquarkusapplication" class="xref page">Viewing Managed Service Resource Usage as a Fraction of Cluster Totals</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="next"><a href="01-getting-started.html">1. Red Hat OpenShift API Management An Introduction</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../../_/js/vendor/clipboard.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
