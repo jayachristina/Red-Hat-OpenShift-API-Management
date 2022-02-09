@@ -13,7 +13,7 @@
 
 
 
-* xref:01-getting-started.adoc[1. {rhoam-name} Introduction]
+* xref:01-getting-started.adoc[1. {rhoam-name} An Introduction]
 ** xref:01-getting-started.adoc#installrhoam[Installing RHOAM Add-on]
 ** xref:01-getting-started.adoc#accessenv[Accessing your Environment]
 ** xref:01-getting-started.adoc#access3scale[Accessing Red Hat {3scale-name} and Red Hat {sso-name}]
