@@ -21,6 +21,8 @@ During the previous lab you learned how to access the Red Hat {osd-name}, and th
 
 In this lab you'll learn to manage your Quarkus API using {3scale-name}. Since the Quarkus API is running in the same cluster as {3scale-name} you can use the *Service Discovery* feature to import your Quarkus API into {3scale-name}.
 
+:sectnums:
+[#preparequarkus]
 == Prepare your Quarkus API for Service Discovery
 
 A set of *labels* and *annotations* must be applied to your Quarkus API before {3scale-name} will be able to find it via *Service Discovery*.
@@ -55,8 +57,8 @@ oc get svc/{base-api-svc-name} -o yaml
 
 The YAML output will be similar to the example shown if the labels and annotations have been applied.
 
-image::images/lab2-svc-yaml.png[Quarkus Service YAML, role="integr8ly-img-responsive"]
-
+image::lab2/lab2-svc-yaml.png[Quarkus Service YAML, role="integr8ly-img-responsive"]
+[#importquarkusapi]
 == Import your Quarkus API using Service Discovery
 
 [NOTE]
@@ -78,14 +80,14 @@ Perform the following steps on the New Product screen:
 
 The *New Product* screen will resemble the following screenshot prior to clicking *Create Product*.
 
-image::images/lab2-import.png[3scale Active Docs, role="integr8ly-img-responsive"]
+image::lab2/lab2-import.png[3scale Active Docs, role="integr8ly-img-responsive"]
 
 At this point, you should be redirected back to the 3scale API Management dashboard.
 If your new API isn’t listed in the APIs section after a few moments, try refreshing the page.
 Once the API has been imported and listed on the dashboard expand it and click the ActiveDoc link. Select `{base-api-svc-name}` on the subsequent screen to view the live documentation that was generated from the OpenAPI specification.
 
-image::images/lab2-active-doc.png[3scale Active Docs, role="integr8ly-img-responsive"]
-
+image::lab2/lab2-active-doc.png[3scale Active Docs, role="integr8ly-img-responsive"]
+[#createapplicationplan]
 == Create an Application Plan in {3scale-name}
 
 Next, you’ll need to configure an Application Plan to interact with the API via a protected route:
@@ -100,8 +102,9 @@ Next, you’ll need to configure an Application Plan to interact with the API vi
 
 The figure below shows the dialog to create a new application plan in 3scale API Management.
 
-image::images/lab2-created-plan.png[3scale Application Plan, role="integr8ly-img-responsive"]
+image::lab2/lab2-created-plan.png[3scale Application Plan, role="integr8ly-img-responsive"]
 
+[#configdevaccount]
 == Configure a Developer Account to use the Application
 
 Now that you’ve created an Application Plan, you’ll need to sign up a developer account to use the application. Typically, an API consumer signs up using your API Developer portal. For the purpose of this lab, you will manually provide the default Developer account with API access:
@@ -117,8 +120,9 @@ Now that you’ve created an Application Plan, you’ll need to sign up a develo
 
 Once the application is created, you’ll see that an API key is listed under the API Credentials section, as shown in the image below. Take note of the key.
 
-image::images/lab2-created-application.png[3scale Application, role="integr8ly-img-responsive"]
+image::lab2/lab2-created-application.png[3scale Application, role="integr8ly-img-responsive"]
 
+[#testapi]
 == Test the API
 
 At this point you can start making requests to your API via a HTTP client.
@@ -128,7 +132,7 @@ At this point you can start making requests to your API via a HTTP client.
 . Copy the cURL command and add /fruits to the URL, e.g https://{base-api-svc-name}-api-3scale-staging.$CLUSTER_HOSTNAME:443/fruits?user_key=$YOUR_API_KEY
 . Issue the command a few times, or paste the URL into a web browser. You should to receive a fruits response.
 
-image::images/lab2-api-response.png[3scale Application, role="integr8ly-img-responsive"]
+image::lab2/lab2-api-response.png[3scale Application, role="integr8ly-img-responsive"]
 
 Congratulations, you've gotten your Quarkus API pushed into a Staging API Management environment!
 

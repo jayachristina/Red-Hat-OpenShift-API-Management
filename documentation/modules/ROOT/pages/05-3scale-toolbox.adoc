@@ -118,13 +118,13 @@ In this section of the lab you create an access token for the 3scale admin APIs.
 . On the _Account Settings Overview_ page, navigate to *Personal -> Tokens*.
 . On the _Access tokens_ page, click *Add Access Token* to create a new access token.
 +
-image::images/lab5-3scale-create-access-token.png[3scale Create Access Token, role="integr8ly-img-responsive"]
+image::lab5/lab5-3scale-create-access-token.png[3scale Create Access Token, role="integr8ly-img-responsive"]
 . On the _New Access Token_ page, enter the following values:
 * *Name*: `admin token`
 * *Scopes*: check `Account Management API`, `Analytics API`, `Policy Registry API`.
 * *Permission*: `Read & Write`
 +
-image::images/lab5-3scale-new-access-token.png[3scale New Access Token, role="integr8ly-img-responsive"]
+image::lab5/lab5-3scale-new-access-token.png[3scale New Access Token, role="integr8ly-img-responsive"]
 * Click *Create Access token* to create the token.
 * On the next page, copy the value of the token, and click *I have copied the token*.
 
@@ -279,33 +279,33 @@ Service policies updated
 . Navigate to the 3Scale Admin Portal and review the API resources created by the 3scale toolbox command. These include:
 * An _API Product_ `Fruits API`. The name corresponds to the name in the OpenAPI spec.
 +
-image::images/lab5-3scale-toolbox-import-openapi-product.png[3scale toolbox import OpenAPI Product, role="integr8ly-img-responsive"]
+image::lab5/lab5-3scale-toolbox-import-openapi-product.png[3scale toolbox import OpenAPI Product, role="integr8ly-img-responsive"]
 * A _Backend_ `Fruits API Backend`.
 +
-image::images/lab5-3scale-toolbox-import-openapi-product.png[3scale toolbox import OpenAPI Backend, role="integr8ly-img-responsive"]
+image::lab5/lab5-3scale-toolbox-import-openapi-product.png[3scale toolbox import OpenAPI Backend, role="integr8ly-img-responsive"]
 * API Product Settings including the Public Base URLs, and authentication settings (API Key as `user_key` HTTP header)
 +
-image::images/lab5-3scale-toolbox-import-openapi-product-settings.png[3scale toolbox import OpenAPI settings, role="integr8ly-img-responsive"]
+image::lab5/lab5-3scale-toolbox-import-openapi-product-settings.png[3scale toolbox import OpenAPI settings, role="integr8ly-img-responsive"]
 +
-image::images/lab5-3scale-toolbox-import-openapi-product-auth.png[3scale toolbox import OpenAPI authentication, role="integr8ly-img-responsive"]
+image::lab5/lab5-3scale-toolbox-import-openapi-product-auth.png[3scale toolbox import OpenAPI authentication, role="integr8ly-img-responsive"]
 * Mapping Rules for the 3 operations defined in the OpenAPI specification.
 +
-image::images/lab5-3scale-toolbox-import-openapi-product-mapping-rules.png[3scale toolbox import OpenAPI mapping rules, role="integr8ly-img-responsive"]
+image::lab5/lab5-3scale-toolbox-import-openapi-product-mapping-rules.png[3scale toolbox import OpenAPI mapping rules, role="integr8ly-img-responsive"]
 +
 Note that the relative URLs of the mapping rules follow the specified public basepath.
 * Methods for the 3 operations defined in the OpenAPI specification.
 +
-image::images/lab5-3scale-toolbox-import-openapi-product-methods.png[3scale toolbox import OpenAPI methods, role="integr8ly-img-responsive"]
+image::lab5/lab5-3scale-toolbox-import-openapi-product-methods.png[3scale toolbox import OpenAPI methods, role="integr8ly-img-responsive"]
 * A _URL Rewriting_ policy.
 +
-image::images/lab5-3scale-toolbox-import-openapi-product-policy.png[3scale toolbox import OpenAPI policy, role="integr8ly-img-responsive"]
+image::lab5/lab5-3scale-toolbox-import-openapi-product-policy.png[3scale toolbox import OpenAPI policy, role="integr8ly-img-responsive"]
 +
 This policy translates the public base path of the URL (`/v1`) to the base path of the backend application (`/`).
 +
-image::images/lab5-3scale-toolbox-import-openapi-product-policy-details.png[3scale toolbox import OpenAPI policy details, role="integr8ly-img-responsive"]
+image::lab5/lab5-3scale-toolbox-import-openapi-product-policy-details.png[3scale toolbox import OpenAPI policy details, role="integr8ly-img-responsive"]
 * ActiveDocs for the API.
 +
-image::images/lab5-3scale-toolbox-import-openapi-product-activedocs.png[3scale toolbox import OpenAPI activedocs, role="integr8ly-img-responsive"]
+image::lab5/lab5-3scale-toolbox-import-openapi-product-activedocs.png[3scale toolbox import OpenAPI activedocs, role="integr8ly-img-responsive"]
 
 . You can change the name of the generated _Product_.
 +
@@ -315,7 +315,7 @@ $ podman run --rm toolbox 3scale service apply rhoam rhoam-api-toolbox --name="F
 +
 On the 3scale Admin Portal this becomes:
 +
-image::images/lab5-3scale-toolbox-update-service.png[3scale toolbox update service, role="integr8ly-img-responsive"]
+image::lab5/lab5-3scale-toolbox-update-service.png[3scale toolbox update service, role="integr8ly-img-responsive"]
 
 === Create an Application Plan
 
@@ -334,7 +334,7 @@ Applied application plan id: 36; Default: true; Published
 +
 On the 3scale Admin Portal:
 +
-image::images/lab5-3scale-toolbox-create-application-plan.png[3scale toolbox create application plan, role="integr8ly-img-responsive"]
+image::lab5/lab5-3scale-toolbox-create-application-plan.png[3scale toolbox create application plan, role="integr8ly-img-responsive"]
 
 . The toolbox also allows to export or import an application plan definition in _yaml_ format. This allows to define more complex application plans including limits and pricing rules. +
 As an example, you can update the application plan created in the previous step to exclude `POST` and `DELETE` operations.
@@ -375,7 +375,7 @@ Created plan limit: [metric: 60, {"period"=>"eternity", "value"=>0}]
 ----
 * On the 3scale Admin Portal:
 +
-image::images/lab5-3scale-toolbox-update-application-plan.png[3scale toolbox update application plan, role="integr8ly-img-responsive"]
+image::lab5/lab5-3scale-toolbox-update-application-plan.png[3scale toolbox update application plan, role="integr8ly-img-responsive"]
 
 === Create an Application
 
@@ -393,7 +393,7 @@ $ podman run --rm toolbox 3scale application apply rhoam  1234567890abcdef --acc
 
 . Verify the existence of the Application on the 3scale Admin Portal:
 +
-image::images/lab5-3scale-toolbox-create-application.png[3scale toolbox create application, role="integr8ly-img-responsive"]
+image::lab5/lab5-3scale-toolbox-create-application.png[3scale toolbox create application, role="integr8ly-img-responsive"]
 
 . At this point you can test the API on the staging APIcast:
 +

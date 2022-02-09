@@ -19,13 +19,13 @@ This lab provides an introduction to {rhoam-name}, also known as {rhoam-acronym}
 running on top of it, are managed by Red Hat SRE and have a 99.95% SLA. The
 following image provides a high-level overview of the {rhoam-acronym} architecture:
 
-image::images/basic-architecture.png[architecture, role="integr8ly-img-responsive"]
+image::lab1/basic-architecture.png[architecture, role="integr8ly-img-responsive"]
 
 However, since {rhoam-acronym} is a hosted an managed service there's a little more to it than that picture shows.
 {rhoam-acronym} clusters are provisioned and managed using Red Hat OpenShift Cluster Manager on link:{ocm-url}[cloud.redhat.com, window="_blank"].
 Operators are installed on the {osd-acronym} to manage the {rhoam-acronym} product lifecycle, and keep SRE teams informed of the cluster and service health. A more detailed architectural representation of this is pictured below.
 
-image::images/detailed-architecture.png[detailed architecture, role="integr8ly-img-responsive"]
+image::lab1/detailed-architecture.png[detailed architecture, role="integr8ly-img-responsive"]
 
 It is assumed you have access to a {rhoam-acronym} environment from this point forward.
 You can get access by:
@@ -42,6 +42,7 @@ Verify you have a development environment with the following configured before c
 * Local Java environment with Maven installed
 
 :sectnums:
+[#installrhoam]
 == Installing the {rhoam-acronym} Add-on
 
 . Login to link:{ocm-url}[cloud.redhat.com, window="_blank"].
@@ -49,11 +50,11 @@ Verify you have a development environment with the following configured before c
 . Select the {osd-name} cluster you plan to install {rhoam-acronym} onto.
 . Navigate to the *Add-ons* tab.
 +
-image::images/lab1-addon-tile.png[RHOAM Addon tile in Add-ons UI]
+image::lab1/lab1-addon-tile.png[RHOAM Addon tile in Add-ons UI]
 . Click the *Install* button on the {rhoam-name} tile.
 . A dialog asking for *CIDR range* and *Notification email* are displayed.
 +
-image::images/lab1-addon-dialog.png[RHOAM Addon Dialog UI]
+image::lab1/lab1-addon-dialog.png[RHOAM Addon Dialog UI]
 . Click the *Use default* link for the CIDR range.
 +
 [NOTE]
@@ -78,8 +79,8 @@ The OpenShift API Management resource requests/requirements are scaled based on 
 
 The installation takes approximately 45 minutes on most clusters.
 
-[time=5]
-[id='accessing-the-cluster']
+
+[#accessenv]
 ==  Accessing your Environment
 
 [NOTE]
@@ -96,26 +97,27 @@ If you've provisioned your own environment you can access the OpenShift console 
 
 A screenshot of the Overview screen is provided for reference.
 
-image::images/lab1-console-url.png[Cluster Overview, role="integr8ly-img-responsive"]
+image::lab1/lab1-console-url.png[Cluster Overview, role="integr8ly-img-responsive"]
 
 Once you've been provided with a URL to your environment, you will be able to login using a configured IdP (identity provider).
 Any available IdPs are listed on the OpenShift login screen as shown in the following screenshot.
 
-image::images/lab1-login.png[OpenShift Login Screen, role="integr8ly-img-responsive"]
+image::lab1/lab1-login.png[OpenShift Login Screen, role="integr8ly-img-responsive"]
 
 Choose the appropriate IdP and login. You should be redirected to the {osd-name} console.
 
-image::images/lab1-osd-console.png[OpenShift Console, role="integr8ly-img-responsive"]
+image::lab1/lab1-osd-console.png[OpenShift Console, role="integr8ly-img-responsive"]
 
 Documentation for {osd-name} IdP configuration is available at link:https://docs.openshift.com/dedicated/4/authentication/dedicated-understanding-authentication.html[this link].
 
+[#access3scale]
 == Accessing Red Hat {3scale-name} and Red Hat {sso-name}
 
 If the {rhoam-name} Add-on has completed installation you can login into your {osd-acronym} cluster, and you can access the managed {3scale-name} and {sso-name} instances.
 
 You can confirm the Add-on installation is complete by checking the Add-ons tab in OpenShift Cluster Management as shown.
 
-image::images/lab1-addon-status.png[Add-on Status in OCM]
+image::lab1/lab1-addon-status.png[Add-on Status in OCM]
 
 [NOTE]
 ====
@@ -133,12 +135,12 @@ image:images/lab1-app-launcher.png[OSD Application Launcher]
 
 This is a screenshot the {3scale-name} console:
 
-image::images/lab1-3scale-console.png[3scale Console, role="integr8ly-img-responsive"]
+image::lab1/lab1-3scale-console.png[3scale Console, role="integr8ly-img-responsive"]
 
 And this is a screenshot of the {sso-name} console:
 
-image::images/lab1-sso-console.png[SSO Console, role="integr8ly-img-responsive"]
-
+image::lab1/lab1-sso-console.png[SSO Console, role="integr8ly-img-responsive"]
+[#createdeployproject]
 == Create and Deploy a Project on {osd-name}
 
 As part of this lab you'll deploy a Quarkus application for use in future labs.
@@ -162,8 +164,8 @@ oc new-project $PROJECT_NAME
 
 Here's an image showing these commands running in a terminal:
 
-image::images/lab1-oc-project.png[Using oc CLI to create a project, role="integr8ly-img-responsive"]
-
+image::lab1/lab1-oc-project.png[Using oc CLI to create a project, role="integr8ly-img-responsive"]
+[#testquarkusapp]
 == Test the Quarkus Application and Deploy to {osd-name}
 
 Get started by cloning the link:{https://github.com/evanshortiss/rhoam-quarkus-openapi}[Quarkus application Git repository] to your development environment.
@@ -192,7 +194,7 @@ oc project $PROJECT_NAME
 The build process can take up to 2 minutes.
 You can view the Build logs by visiting the *Builds* section of your project as shown.
 
-image::images/lab1-build.png[Build Configs, role="integr8ly-img-responsive"]
+image::lab1/lab1-build.png[Build Configs, role="integr8ly-img-responsive"]
 
 Once the build is complete issue the `oc get route -n $PROJECT_NAME` command to find the URL for your Quarkus application.
 Verify that the `/fruits` and `/openapi?format=json` endpoints are working as expected since these are required for the next lab.

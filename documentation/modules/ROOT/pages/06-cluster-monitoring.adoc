@@ -31,7 +31,7 @@ Monitoring resources can only be viewed by OpenShift user accounts that have *de
 .. Prometheus
 .. Alertmanager
 
-image::images/lab-6-mw-monitor-route-list.png[Middleware Monitoring Routes]
+image::lab6/lab-6-mw-monitor-route-list.png[Middleware Monitoring Routes]
 
 === Accessing the Grafana Dashboards
 
@@ -47,15 +47,15 @@ You should be redirected to a Grafana instance homepage after successfully authe
 +
 All the dashboards that are available to you should be listed, similar to the following image.
 +
-image::images/lab-6-grafana-dashboard-list.png[Grafana Dashboards]
+image::lab6/lab-6-grafana-dashboard-list.png[Grafana Dashboards]
 
 The *Critical SLO summary* dashboard provides the viewer with information relating to Service Level Objectives. Specifically, it indicates the availability of {rhoam-acronym} components within the overall SLA agreement a 28 day period.
 
-image::images/lab-6-mw-monitor-slo.png[SLO Grafana Dashboard]
+image::lab6/lab-6-mw-monitor-slo.png[SLO Grafana Dashboard]
 
 The *CRO Resources* dashboard provides a view of CPU and Memory metrics, and the status of underlying cloud resources. Postgres and Redis are two such cloud resources, and are provided by the underlying cloud vendor, e.g AWS ElastiCache for Redis.
 
-image::images/lab-6-mw-monitor-cr.png[CRO Grafana Dashboard]
+image::lab6/lab-6-mw-monitor-cr.png[CRO Grafana Dashboard]
 
 === Viewing Managed Service Resource Usage
 
@@ -65,7 +65,7 @@ image::images/lab-6-mw-monitor-cr.png[CRO Grafana Dashboard]
 . Select the *Resource Usage by Namespace* dashboard.
 . Click the *namespace* dropdown.
 +
-image::images/lab-6-mw-monitor-namespaces.png[Middleware Namespace Resource Grafana Dashboard]
+image::lab6/lab-6-mw-monitor-namespaces.png[Middleware Namespace Resource Grafana Dashboard]
 . Choose the *redhat-rhoam-3scale* entry.
 
 This view can be used to monitor CPU and Memory usage by APIcast, Zync, and other {3scale-name} Pods.
@@ -79,4 +79,4 @@ To view the resource usage of the Managed Service components with respect to ove
 . Open the Grafana Route and navigate to the dashboards list.
 . Select the *Resource Usage for Cluster* dashboard.
 
-image::images/lab-6-mw-monitor-cluster.png[Middleware Resource for Cluster Grafana Dashboard]
+image::lab6/lab-6-mw-monitor-cluster.png[Middleware Resource for Cluster Grafana Dashboard]

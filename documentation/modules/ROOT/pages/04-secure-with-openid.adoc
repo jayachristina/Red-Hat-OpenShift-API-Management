@@ -8,6 +8,8 @@
 
 In this lab you will learn how to secure an API managed with {3scale-name} using OpenID Connect (OIDC), using the {sso-name} instance of {rhoam-name} as identity provider.
 
+:sectnums:
+[#create-a-realm]
 == Create a Realm on {sso-name}
 
 . Access the {sso-name-short} console through the *Application Launcher* in the {osd-name} console. This the square icon in the top-right.
@@ -15,23 +17,23 @@ In this lab you will learn how to secure an API managed with {3scale-name} using
 . Log in to the {sso-name-short} administration console. Login using your IdP.
 . You are redirected to the overview page of the _Master_ realm.
 +
-image::images/lab4-sso-console.png[SSO Console, role="integr8ly-img-responsive"]
+image::lab4/lab4-sso-console.png[SSO Console, role="integr8ly-img-responsive"]
 . To create a new realm, hover over the realm drop-down in the menu and click the *Add realm* button.
 +
-image::images/lab4-sso-add-realm.png[SSO Add Realm, role="integr8ly-img-responsive"]
+image::lab4/lab4-sso-add-realm.png[SSO Add Realm, role="integr8ly-img-responsive"]
 . Give a name to your realm, for example `3scale-realm`.
 . Click the *Create* button to create the realm.
 . You are redirected to the overview screen of your new realm.
 +
-image::images/lab4-sso-3scale-realm.png[SSO 3scale Realm, role="integr8ly-img-responsive"]
+image::lab4/lab4-sso-3scale-realm.png[SSO 3scale Realm, role="integr8ly-img-responsive"]
 . The next step is to create a user for the realm. In the realm menu, select *Users*.
 . On the users overview page, click the *Add user* button on the right to create a new user.
 . Fill in the form. Click *Save* to create the user.
 +
-image::images/lab4-sso-add-user.png[SSO Add User, role="integr8ly-img-responsive"]
+image::lab4/lab4-sso-add-user.png[SSO Add User, role="integr8ly-img-responsive"]
 . Open the *Credentials* tab and set a password for the new user. Make sure *Temporary* is set to `OFF`. Click *Set Password* to save the password.
 +
-image::images/lab4-sso-user-set-password.png[SSO User Set Password, role="integr8ly-img-responsive"]
+image::lab4/lab4-sso-user-set-password.png[SSO User Set Password, role="integr8ly-img-responsive"]
 
 == 3scale and {sso-name} Integration
 
@@ -74,18 +76,18 @@ A good explanation of the different OIDC flows can be found here: https://develo
 * Set *Direct Access Grants Enabled* to `OFF`.
 * Set *Service Accounts Enabled* to `ON`.
 +
-image::images/lab4-sso-client-settings-client-credentials.png[SSO Realm Client Settings For Client Credentials, role="integr8ly-img-responsive"]
+image::lab4/lab4-sso-client-settings-client-credentials.png[SSO Realm Client Settings For Client Credentials, role="integr8ly-img-responsive"]
 
 . Scroll down and click *Save* to save the client configuration.
 . Navigate to the *Service Account Roles* tab of the client settings.
 . In the *Client Roles* dropdown, type `realm-management`.
 . Ensure that the `manage-clients` role is listed as one of the *Assigned Roles*.
 +
-image::images/lab4-sso-client-service-account-roles.png[SSO Realm Client Service Account Roles, role="integr8ly-img-responsive"]
+image::lab4/lab4-sso-client-service-account-roles.png[SSO Realm Client Service Account Roles, role="integr8ly-img-responsive"]
 . Take note of the _Client ID_ - which is `zync-sso` unless you changed the value.
 . Take note of the _Client Secret_. You can find the value of the Client Secret on the *Credentials* page of the client.
 +
-image::images/lab4-sso-realm-client-credentials.png[SSO Realm Client Credentials, role="integr8ly-img-responsive"]
+image::lab4/lab4-sso-realm-client-credentials.png[SSO Realm Client Credentials, role="integr8ly-img-responsive"]
 
 == Create API in {3scale-name} and Configure to Use OpenID Connect
 
@@ -132,10 +134,10 @@ This URL serves the following purposes:
 =====
 * In the *OIDC AUTHORIZATION FLOW* section, ensure that the `Authorization Code Flow` checkbox is checked.
 +
-image::images/lab4-3scale-api-oidc-settings.png[3scale API OIDC Settings, role="integr8ly-img-responsive"]
+image::lab4/lab4-3scale-api-oidc-settings.png[3scale API OIDC Settings, role="integr8ly-img-responsive"]
 * Scroll down and change *Credentials Location* to _As HTTP Headers_.
 +
-image::images/lab4-3scale-api-credentials-location.png[3scale API Credentials Location, role="integr8ly-img-responsive"]
+image::lab4/lab4-3scale-api-credentials-location.png[3scale API Credentials Location, role="integr8ly-img-responsive"]
 
 . Click *Update Product* to update the settings.
 
@@ -157,7 +159,7 @@ In this section of the lab you create an application for the _RHOAM API OIDC_ AP
 . On the overview page for the application, click *Edit* in the _API Credentials_ section.
 . Set the redirect URL to `https://www.getpostman.com/oauth2/callback`.
 +
-image::images/lab4-3scale-api-oidc-callback-url.png[3scale API OIDC callback, role="integr8ly-img-responsive"]
+image::lab4/lab4-3scale-api-oidc-callback-url.png[3scale API OIDC callback, role="integr8ly-img-responsive"]
 +
 * This redirect URL will become useful later in this lab when you test using the _Authorization Code_ OAuth2 flow.
 * Notice that the API Credentials for this application do no consist of a user key, but rather a Client ID and a Client Secret.
@@ -169,7 +171,7 @@ As a result of creating the application, the 3scale zync component has created a
 . Log in to RH-SSO, select the 3scale realm and navigate to the *Clients* section.
 . Notice that a new client has been created with a client ID corresponding to the client ID of the _TestOIDC RHOAM App_ application in 3scale.
 +
-image::images/lab4-sso-zync-client-created.png[RH-SSO Client created by Zync, role="integr8ly-img-responsive"]
+image::lab4/lab4-sso-zync-client-created.png[RH-SSO Client created by Zync, role="integr8ly-img-responsive"]
 . Click the *Edit* button for the new client.
 * The client name corresponds to the name of the application in 3scale.
 * The redirect URL matches the URL you specified in the API credentials.
@@ -195,11 +197,11 @@ $ which Postman
 
 . Open the Postman application. If this is the first time you used Postman, expect to be greeted with a sign-up page. Feel free to skip this stage and go directly to the application.
 +
-image::images/lab4-postman-signup-page.png[Postman Signup Page, role="integr8ly-img-responsive"]
+image::lab4/lab4-postman-signup-page.png[Postman Signup Page, role="integr8ly-img-responsive"]
 
 . Expect to see the landing page of the Postman application:
 +
-image::images/lab4-postman-home-page.png[Postman Home Page, role="integr8ly-img-responsive"]
+image::lab4/lab4-postman-home-page.png[Postman Home Page, role="integr8ly-img-responsive"]
 
 . Click *Create a request*.
 
@@ -210,7 +212,7 @@ The APIcast URL can be obtained from the _Configuration_ page of the API in the 
 . Click *Send*.
 . Expect a `403 Forbidden` return code, and a response `Authentication parameters missing`.
 +
-image::images/lab4-postman-response-forbidden.png[Postman Response Forbidden, role="integr8ly-img-responsive"]
+image::lab4/lab4-postman-response-forbidden.png[Postman Response Forbidden, role="integr8ly-img-responsive"]
 
 . Configure Postman to obtain an access token from the RH-SSO server.
 .. Click the *Authorization* tab.
@@ -226,12 +228,12 @@ image::images/lab4-postman-response-forbidden.png[Postman Response Forbidden, ro
 * *Scope* : `openid`
 * *Client Authentication* : `Send as Basic Auth header`
 +
-image::images/lab4-postman-configure-new-token.png[Postman Configure New Token, role="integr8ly-img-responsive"]
+image::lab4/lab4-postman-configure-new-token.png[Postman Configure New Token, role="integr8ly-img-responsive"]
 
 . Click *Get New Access Token*.
 * A new dialog box appears that shows the login screen for your realm on the RH-SSO server.
 +
-image::images/lab4-postman-request-token-login.png[Postman Request Token SSO Login, role="integr8ly-img-responsive"]
+image::lab4/lab4-postman-request-token-login.png[Postman Request Token SSO Login, role="integr8ly-img-responsive"]
 
 . Enter the username and password of the realm user you created previously. Click *Log In*.
 
@@ -239,11 +241,11 @@ image::images/lab4-postman-request-token-login.png[Postman Request Token SSO Log
 +
 Click *Use Token*
 +
-image::images/lab4-postman-use-token.png[Postman Use Token, role="integr8ly-img-responsive"]
+image::lab4/lab4-postman-use-token.png[Postman Use Token, role="integr8ly-img-responsive"]
 
 . Back on the request page, click *Send*. +
 This time expect a successful response.
 +
-image::images/lab4-postman-response-ok.png[Postman Response OK, role="integr8ly-img-responsive"]
+image::lab4/lab4-postman-response-ok.png[Postman Response OK, role="integr8ly-img-responsive"]
 
 Congratulations, you've secured your API on {rhoam-name} with {sso-name} and OpenID Connect!

@@ -28,15 +28,15 @@
 ** xref:02-service-discover.adoc#testapi[Test the API]
 
 * xref:03-rate-limit-monitoring.adoc[3.{rhoam-name} Rate Limit Monitoring]
-** xref:03-rate-limit-monitoring.adoc#toolsimage[Accessing the Grafana Monitoring Instance]
-** xref:03-rate-limit-monitoring.adoc#connectopenshiftstreams[Viewing the Grafana Monitoring Dashboard]
-** xref:03-rate-limit-monitoring.adoc#inspectkafkadetails[Dashboard Overview]
-** xref:03-rate-limit-monitoring.adoc#inspectkafkadetails[Per Minute API Requests Graph]
-*** xref:03-rate-limit-monitoring.adoc#inspectkafkadetails[Filtered Per Minute API Requests Graph]
+** xref:03-rate-limit-monitoring.adoc#access-grafana-monit[Accessing the Grafana Monitoring Instance]
+** xref:03-rate-limit-monitoring.adoc#view-grafana-monit[Viewing the Grafana Monitoring Dashboard]
+** xref:03-rate-limit-monitoring.adoc#dashboard-overview[Dashboard Overview]
+** xref:03-rate-limit-monitoring.adoc#per-min-api-graph[Per Minute API Requests Graph]
+*** xref:03-rate-limit-monitoring.adoc#filter-per-min-api-graph[Filtered Per Minute API Requests Graph]
 
 
 * xref:04-secure-with-openid.adoc[4. Securing APIs with OpenID Connect and {sso-name} on {rhoam-name}]
-** xref:04-secure-with-openid.adoc#deployquarkusapplication[Create a Realm on {sso-name}]
+** xref:04-secure-with-openid.adoc#create-a-realm[Create a Realm on {sso-name}]
 ** xref:04-secure-with-openid.adoc#createkafkatopic[3scale and {sso-name} Integration]
 ** xref:04-secure-with-openid.adoc#toolsimage[Create API in {3scale-name} and Configure to Use OpenID Connect]
 ** xref:04-secure-with-openid.adoc#bindquarkusapp[Create Application]
