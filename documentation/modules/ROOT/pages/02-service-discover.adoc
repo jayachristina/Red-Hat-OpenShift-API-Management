@@ -12,6 +12,9 @@
 :plan-pretty-name: {project-var} Test Plan
 :plan-system-name: {project-var}-test-plan
 :application-name: {project-var} Test Application
+:sso-name: Red Hat Single Sign-On
+:sso-name-short: RH-SSO
+
 
 = Using Red Hat OpenShift API Management & Service Discovery
 

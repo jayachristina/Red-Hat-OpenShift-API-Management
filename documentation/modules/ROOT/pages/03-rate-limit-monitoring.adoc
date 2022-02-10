@@ -9,6 +9,9 @@
 :3scale-name: 3scale API Management
 :project-var: $PROJECT_NAME
 :base-api-svc-name: {project-var}-rhoam-openapi
+:sso-name: Red Hat Single Sign-On
+:sso-name-short: RH-SSO
+
 
 = {rhoam-name} Rate Limit Monitoring
 
