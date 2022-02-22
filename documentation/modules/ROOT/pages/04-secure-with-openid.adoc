@@ -4,7 +4,7 @@
 :sso-name: Red Hat Single Sign-On
 :sso-name-short: RH-SSO
 
-= Securing APIs with OpenID Connect and {sso-name}} on {rhoam-name}
+= Securing APIs with OpenID Connect and {sso-name} on {rhoam-name}
 
 In this lab you will learn how to secure an API managed with {3scale-name} using OpenID Connect (OIDC), using the {sso-name} instance of {rhoam-name} as identity provider.
 
